@@ -1,0 +1,10 @@
+.conteiner-general {
+    display:inline-flex
+}
+
+.FILTERS {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: whitesmoke;
+}

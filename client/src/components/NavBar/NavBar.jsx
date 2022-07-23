@@ -1,12 +1,42 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { useDispatch } from "react-redux";
+import { fetchRecipes } from "../../redux/actions";
 
 
-export default function landingPage() { 
 
-    return <div>
-        HENRY FOOD 
-        <button onClick={(a) => console.log(a)}> Comenzar </button>
-    </div>
+export default function NavBar() { 
+    let dispatch = useDispatch()
+  
+
+    const [name, setName] = useState('')
+     
+    function handleInputChange(e) {
+        e.preventDefault();
+        setName(e.target.value);
+    }
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        dispatch(fetchRecipes(name))
+        setName('')
+    }
+
+    return (
+        <div>
+            <input
+            type = 'text'
+            placeholder="Buscar..."    
+            onChange={(e) => handleInputChange(e)} 
+            />
+            <button
+            type = 'submit'
+            onClick={(e) => handleSubmit(e)}
+            >
+            BUSCAR
+            </button>
+        </div>
+
+    )
 
 };

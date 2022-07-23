@@ -12,8 +12,6 @@ router.get('/', async (req, res, next) => {
             raw: true,
         })
 
-        console.log(diets);
-
         if(diets.length === 0 ) {
             let dietsdefault = [ 
                 "Gluten Free",
@@ -29,12 +27,21 @@ router.get('/', async (req, res, next) => {
                 "Whole30"
             ]
     
+
+            let promises = []
             dietsdefault.forEach(diet => {
-                Diet.create({
+                promises.push(Diet.create({
                     name : diet,
+                }))
+            })
+
+            Promise.all(promises)
+            .then((value) => {
+                Diet.findAll().then(diets => {
+                    return res.send(value)
                 })
             })
-            res.send('Dietas agregadas correctamente');
+
         }
         else {
             return res.send(diets);

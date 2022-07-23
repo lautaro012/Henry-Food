@@ -7,7 +7,7 @@ const axios = require('axios')
 
 const YOUR_API_KEY = '3e53167df35647c19dfd101a5233dbc5'
 
-//const YOUR_API_KEY = 'be5300dbbf044534a95cd8b9e861ed56'
+// const YOUR_API_KEY = 'be5300dbbf044534a95cd8b9e861ed56'
 
 // const YOUR_API_KEY = '35a39f22390440e9a4557b2ef96f28cf'
 
@@ -33,7 +33,7 @@ router.get('/', async (req , res, next) => {
                  
             })
             // Lo busco en la API
-            let recipesFromApi= await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&addRecipeInformation=true`)
+            let recipesFromApi= await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&addRecipeInformation=true&number=100`)
                 .then(resp => resp.data)
 
             let filteredRecipesApi = [];
@@ -55,6 +55,15 @@ router.get('/', async (req , res, next) => {
             let recipes = [...searchInDB, ...filteredRecipesApi]    
 
             if(recipes.length > 0) {
+                recipes.sort(function (a, b) {
+                    if(a.name > b.name) {
+                        return 1
+                    }
+                    if(b.name > a.name) {
+                        return -1
+                    }
+                    return 0
+                });
                 res.send(recipes)
             } else {
                 res.status(404).send('No se encontro receta con ese nombre.')
@@ -63,7 +72,7 @@ router.get('/', async (req , res, next) => {
         } else {  //Si el name no existe busco todas las recetas
 
             // traigo las recetas desde la Api y desde mi DB
-            let recipesFromApi= axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&addRecipeInformation=true`)
+            let recipesFromApi= axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&addRecipeInformation=true&number=100`)
                     .then(resp => resp.data);
             
             let recipesFromDB= await Recipe.findAll({
@@ -117,7 +126,17 @@ router.get('/', async (req , res, next) => {
                 console.log(orderedRecipesDb)
 
                 const recipes = [...filteredRecipesApi, ...orderedRecipesDb]
-
+                
+                recipes.sort(function (a, b) {
+                    if(a.name > b.name) {
+                        return 1
+                    }
+                    if(b.name > a.name) {
+                        return -1
+                    }
+                    return 0
+                });
+              
                 res.send(recipes);
 
 
@@ -137,19 +156,38 @@ router.get('/', async (req , res, next) => {
     
 })
 
-router.get('/:idReceta', (req, res, next) => {
+router.get('/:idReceta', async (req, res, next) => {
 
     try {
         const { idReceta } = req.params;
-        // si el ID es un string, la receta viene de DB
-        if( typeof idReceta == 'string' ) {
-            Recipe.findByPk(idReceta)
-                .then((resp) => {
-                    res.send(resp);
-                })
-        } 
+        // si es un string, la receta es creada por el usuario
+            if( typeof idReceta == 'string' && idReceta.length > 6 ) {
 
-    } catch (error) {
+                let recipe = await Recipe.findByPk(idReceta)
+                
+                return res.send(recipe)
+
+            } else {
+                
+                    let recipesFromApi= await axios.get(`https://api.spoonacular.com/recipes/${idReceta}/information?apiKey=${YOUR_API_KEY}`)
+
+
+                    let filteredRecipesApi = {
+                            name: recipesFromApi.data.title ,
+                            id: recipesFromApi.data.id,
+                            resume: recipesFromApi.data.summary,
+                            step_by_step: recipesFromApi.data.analyzedInstructions,
+                            health_score: recipesFromApi.data.healthScore,
+                            image: recipesFromApi.data.image,
+                            diets: recipesFromApi.data.diets
+                        }
+                        res.send(filteredRecipesApi)
+            }
+                
+            
+        }
+
+     catch (error) {
         next(error);
     }
 

@@ -1,0 +1,18 @@
+.form-general {
+    background-color: whitesmoke;
+    display:flex;
+    flex-direction: column;
+}
+
+.diets {
+    display: flex;
+    width: 500px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.form {
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,11 @@
+.Paginado-conteiner {
+    top: 0;
+    display: flex;
+    justify-content: center;
+}
+
+
+.Paginado {
+    list-style: none;
+    display: flex;
+}

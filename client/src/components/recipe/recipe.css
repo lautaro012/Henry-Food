@@ -1,7 +1,26 @@
-.recipe {
-    display:inline-flex;
+.recipe-conteiner {
+    display: inline-flex;
+    flex-direction: column;
     background-color: whitesmoke;
     border: black solid;
-    width: 400px;
+    width: 550px;
     height: 300px;
+}
+
+.name {
+    height: 60px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.IMG_HS {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+.Link {
+    border: solid black 1px
 }

@@ -1,40 +1,94 @@
 export const FETCH_RECIPE = 'FETCH_RECIPE'
+export const FETCH_RECIPE_NAME = 'FETCH_RECIPE_NAME'
 export const DELETE_RECIPE = 'DELETE_RECIPE'
 export const CREATE_RECIPE = 'CREATE_RECIPE'
 export const FETCH_DIET = 'FETCH_DIET'
+export const FILTER_BY_DIET = 'FILTER_BY_DIET'
+export const FILTER_CREATED = 'FILTER_CREATED'
+export const FETCH_DETAILS = 'FETCH_DETAILS'
+export const ORDER_BY_NAME = 'ORDER_BY_NAME'
+export const ORDER_BY_RATE = 'ORDER_BY_RATE'
 
-export function fetchRecipes() {
-    return function(dispatch) {
-        fetch('http://localhost:3001/api/Recipe')
-        .then(resp => resp.json())
-        .then((recipes) => {
-            dispatch({
-                type: FETCH_RECIPE,
-                payload: recipes
+export function fetchRecipes(name) {
+    if(name) {
+        return function(dispatch) {
+            fetch('http://localhost:3001/api/Recipe?name=' + name)
+            .then(resp => resp.json())
+            .then(recipes => {
+                dispatch({
+                    type: FETCH_RECIPE_NAME,
+                    payload: recipes
+                })
             })
-        })
-        .catch(error => {
-            console.log(error)
-        })
-        
+        }
+    } else {
+        return function(dispatch) {
+            fetch('http://localhost:3001/api/Recipe')
+            .then(resp => resp.json())
+            .then((recipes) => {
+                dispatch({
+                    type: FETCH_RECIPE,
+                    payload: recipes
+                })
+            })
+            .catch(error => {
+                console.log(error)
+            })
+            
+        }
     }
     
 }
 
-export function fetchDiets() {
-    return async function(dispatch) {
+
+
+export function fetchRecipeDetail(id) {
+    return function(dispatch) {
         
         try {
+            if(typeof id === 'string') {
+                fetch(`http://localhost:3001/api/Recipe/${id}`)
+                .then(res => res.json())
+                .then(recipe => {
+                    console.log(recipe)
+                    dispatch({
+                        type: FETCH_DETAILS,
+                        payload: recipe
+                    })
+                })
+            } else {
+                fetch(`https://api.spoonacular.com/recipes/${id}/information`)
+                .then(res => res.json())
+                .then(recipe => {
+                    console.log(recipe)
+                    dispatch({
+                        type: FETCH_DETAILS,
+                        payload: recipe
+                    })
+                })
+            } 
+        } catch (error) {
+            console.log(error)
+        }
 
-            const fetchdiets = await fetch('http://localhost:3001/api/Diet')
-    
-            const diets = await fetchdiets.json()
-    
-            dispatch({
-                type: FETCH_DIET,
-                payload: diets,
-            })
+
+    }
+}
+
+export function fetchDiets() {
+    return function(dispatch) {
+        
+        try {
             
+            fetch('http://localhost:3001/api/Diet')
+                .then(res => res.json())
+                .then(diets => {
+                    dispatch({
+                        type: FETCH_DIET,
+                        payload: diets,
+                    })
+                }) 
+
         } catch (error) {
             console.log(error)
         }
@@ -43,17 +97,61 @@ export function fetchDiets() {
 }
 
 export const createProduct = function(payload) {
-    return {
-      type:CREATE_RECIPE,
-      payload: {...payload}
+    return function(dispatch) {
+        try {
+            fetch('http://localhost:3001/api/Recipe', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Content-Type': 'application/json'
+                  },
+                body: JSON.stringify(payload)
+    
+            })
+            .then(response => response.json())
+            .then(res => console.log(res))
+            
+        } catch (error) {
+            console.log('error PORQUE:' + error)
+        }
     }
-  };
-  
-  
-  export const deleteProduct = function(recipe) {
-    return {
-        type: DELETE_RECIPE,
-        payload: recipe
-    }
-  };
 
+    
+  };
+  
+  
+//   export const deleteProduct = function(recipeID) {
+//     return {
+//         type: DELETE_RECIPE,
+//         payload: recipeID
+//     }
+//   };
+
+
+  export const filteredRecipeByDiet = function(payload) {
+    return {
+        type: FILTER_BY_DIET,
+        payload
+    }
+  }
+
+  export const filterCreated = function(payload) {
+    return {
+        type: FILTER_CREATED,
+        payload
+    }
+  }
+
+  export const orderByName = function(payload) {
+    return {
+        type: ORDER_BY_NAME,
+        payload
+    }
+  }
+
+  export const orderByRate = function(payload) {
+    return {
+        type: ORDER_BY_RATE,
+        payload
+    }
+  }
