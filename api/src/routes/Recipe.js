@@ -5,7 +5,9 @@ const axios = require('axios')
 
 // const YOUR_API_KEY = '6f8483e9e0d147498227b6f04df7a4b8'
 
-const YOUR_API_KEY = '3e53167df35647c19dfd101a5233dbc5'
+const YOUR_API_KEY = '19ed143a2218472f8e3ab6f1d2ae6b4b'
+
+// const YOUR_API_KEY = '3e53167df35647c19dfd101a5233dbc5'
 
 // const YOUR_API_KEY = 'be5300dbbf044534a95cd8b9e861ed56'
 
@@ -47,6 +49,8 @@ router.get('/', async (req , res, next) => {
                             step_by_step: recipe.analyzedInstructions,
                             health_score: recipe.healthScore,
                             image: recipe.image,
+                            extendedIngredients: recipe.analyzedInstructions.length ? recipe.analyzedInstructions[0].steps : "There are no instructions.",
+                            dishTypes: recipe.dishTypes,
                             diets: recipe.diets,
                         })
                     } 
@@ -76,14 +80,14 @@ router.get('/', async (req , res, next) => {
                     .then(resp => resp.data);
             
             let recipesFromDB= await Recipe.findAll({
-                include: [
+                include: 
                     { 
                         model: Diet, 
                         as: 'diets', 
                         attributes: ['id', 'name'], 
                         through: { attributes: [] }
                     }
-                ],
+                ,
                 nest: true,
                 // raw: true (problemas anidando los diets)
             });
@@ -103,9 +107,12 @@ router.get('/', async (req , res, next) => {
                     name: recipe.title ,
                     id: recipe.id,
                     resume: recipe.summary,
-                    step_by_step: recipe.analyzedInstructions,
+                    step_by_step: recipe.analyzedInstructions.length ? recipe.analyzedInstructions[0].steps : "There are no instructions.",
                     health_score: recipe.healthScore,
                     image: recipe.image,
+                    cheap: recipe.cheap,
+                    veryPopular: recipe.veryPopular,
+                    dishTypes: recipe.dishTypes,  
                     diets: recipe.diets,
                     }
                 })
@@ -116,6 +123,10 @@ router.get('/', async (req , res, next) => {
                     id: recipe.dataValues.id,
                     resume: recipe.dataValues.resume,
                     health_score: recipe.dataValues.healthScore,
+                    image: recipe.dataValues.image,
+                    cheap: recipe.dataValues.cheap,
+                    veryPopular: recipe.dataValues.veryPopular,
+                    dishTypes: recipe.dataValues.dishTypes,  
                     step_by_step: recipe.dataValues.step_by_step,
                     diets: recipesDb[0].diets.map(diet => {
                         return diet.dataValues.name
@@ -123,7 +134,7 @@ router.get('/', async (req , res, next) => {
                     }
                 })
 
-                console.log(orderedRecipesDb)
+                
 
                 const recipes = [...filteredRecipesApi, ...orderedRecipesDb]
                 
@@ -164,8 +175,12 @@ router.get('/:idReceta', async (req, res, next) => {
             if( typeof idReceta == 'string' && idReceta.length > 6 ) {
 
                 let recipe = await Recipe.findByPk(idReceta)
-                
-                return res.send(recipe)
+                let diets = await recipe.getDiets()
+                diets = diets.map(diet => {
+                    return diet.dataValues.name
+                    
+                })
+                return res.send({...recipe.dataValues, diets})
 
             } else {
                 
@@ -176,9 +191,11 @@ router.get('/:idReceta', async (req, res, next) => {
                             name: recipesFromApi.data.title ,
                             id: recipesFromApi.data.id,
                             resume: recipesFromApi.data.summary,
-                            step_by_step: recipesFromApi.data.analyzedInstructions,
+                            step_by_step: recipesFromApi.data.analyzedInstructions.length ? recipesFromApi.data.analyzedInstructions[0].steps : "There are no instructions.",
                             health_score: recipesFromApi.data.healthScore,
                             image: recipesFromApi.data.image,
+                            extendedIngredients: recipesFromApi.data.extendedIngredients.map(ingredient => ingredient.original),
+                            dishTypes: recipesFromApi.data.dishTypes,
                             diets: recipesFromApi.data.diets
                         }
                         res.send(filteredRecipesApi)
@@ -196,12 +213,17 @@ router.get('/:idReceta', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
     try {
-        const { name, resume, health_score, step_by_step  } = req.body
+        const { name, resume, health_score, step_by_step, veryPopular, image, cheap, dishTypes, extendedIngredients  } = req.body
         const newRecipe = await Recipe.create({
             name,
             resume,
             health_score,
             step_by_step,
+            extendedIngredients,
+            image,
+            cheap,
+            dishTypes,
+            veryPopular      
         })
         res.send(newRecipe);
     } catch (error) {

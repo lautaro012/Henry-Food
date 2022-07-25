@@ -4,8 +4,8 @@ import { CREATE_RECIPE, FETCH_DETAILS,
         FETCH_RECIPE_NAME, 
         FILTER_BY_DIET, 
         FILTER_CREATED, 
-        ORDER_BY_NAME, 
-        ORDER_BY_RATE} from "../actions";
+        ORDER
+        } from "../actions";
 
 
 const initialState = {
@@ -49,6 +49,7 @@ export default function reducer(state = initialState, action) {
         case CREATE_RECIPE:
             return {
                 ...state,
+                recipes: [...state.recipes, action.payload]
             }
 
         case FILTER_BY_DIET:
@@ -74,64 +75,39 @@ export default function reducer(state = initialState, action) {
                 if(typeof recipe.id === 'string') return recipe;
                 return console.log('Receta filtrada')
             }) 
-            console.log(myRecipes)
+           
 
             return {
                 ...state,
                 recipes: myRecipes
             }
 
-        case ORDER_BY_NAME:
-
-            let sorted = action.payload === 'asc' ?
-            state.recipes.sort(function (a, b) {
-                if(a.name > b.name) {
-                    return 1
-                }
-                if(b.name > a.name) {
-                    return -1
-                }
-                return 0
-            }) :
-            state.recipes.sort(function (a, b) {
-                if(a.name > b.name) {
-                    return -1
-                }
-                if(b.name > a.name) {
-                    return 1
-                }
-                return 0
-            })
+        case ORDER:
+            const orderType = action.payload.orderType
+            const orderBy = action.payload.orderBy
+            const sortedRecipes = orderType === 'asc' ?
+                    state.recipes.sort((a, b) => {
+                        if(a[orderBy] > b[orderBy]) {
+                            return 1
+                        }
+                        if(a[orderBy] < b[orderBy]) {
+                            return -1
+                        }
+                        return 0
+                    }):
+                    state.recipes.sort((a, b) => {
+                        if(a[orderBy] < b[orderBy]) {
+                            return 1
+                        }
+                        if(a[orderBy] > b[orderBy]) {
+                            return -1
+                        }
+                        return 0
+                    })
 
             return {
                 ...state,
-                recipes : sorted
-            }
-
-        case ORDER_BY_RATE:
-
-            let sortedrate = action.payload === 'des' ?
-            state.recipes.sort(function (a, b) {
-                if(a.health_score > b.health_score) {
-                    return 1
-                }
-                if(b.health_score > a.health_score) {
-                    return -1
-                }
-                return 0
-            }) :
-            state.recipes.sort(function (a, b) {
-                if(a.health_score > b.health_score) {
-                    return -1
-                }
-                if(b.health_score > a.health_score) {
-                    return 1
-                }
-                return 0
-            })
-            return {
-                ...state,
-                recipes : sortedrate
+                recipes: sortedRecipes
             }
 
         default:

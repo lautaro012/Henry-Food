@@ -22,8 +22,20 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
     },
     step_by_step: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+    },
+    extendedIngredients: {
+      type: DataTypes.ARRAY(DataTypes.STRING)
+    },
+    image: {
       type: DataTypes.TEXT,
     },
+    cheap: {
+      type: DataTypes.STRING
+    },
+    veryPopular: {
+      type: DataTypes.STRING
+    }
   }, {
     timestamps: false,
     createdAt: false,

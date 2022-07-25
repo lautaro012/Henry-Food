@@ -1,38 +1,72 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createProduct, fetchDiets } from "../../redux/actions";
+import { createRecipe, fetchDiets, fetchRecipes } from "../../redux/actions";
 import { useEffect } from "react";
 import './CreateRecipe.css'
 import { useHistory } from "react-router-dom";
+import NavBar from "../NavBar/NavBar";
+
+
+
+function validate(input) {
+    let errors = {}
+    if (!input.name) {
+        errors.name = 'Name is required'
+    }
+    if (!input.resume) {
+        errors.resume = 'Resume is required'
+    } 
+    if (typeof input.name !== 'string') {
+        errors.name = 'Name must not contain numbers'
+    }
+    
+    if (!input.health_score) {
+        errors.HealthscoreNull = 'HealthScore is required' 
+    } else if(parseInt(input.health_score) < 0 || parseInt(input.health_score) > 100) {
+        errors.HealthscoreMaxMin = 'HealthScore must be a number between 0-100'
+    } else if(!parseInt(input.health_score)) {
+        errors.HealthscoreNotNum = 'HealthScore must be a number'
+    }
+
+    return errors
+  }
 
 
 export default function CreateRecipe() {
-
     let dispatch = useDispatch();
     let history = useHistory();
+    
     const dietsfetched = useSelector(state => state.diets)
     
     
+    const [errors, setErrors] = useState({})
+    const [instructionList, setInstructionList] = useState([
+        {Step: ''},
+    ])
     //lo que necesita mi POST:  
     const [input, setInput] = useState({
         name: '',
         resume: '',
-        health_score: 0,
-        step_by_step: '',
+        health_score: 1,
+        step_by_step: 'There are no instructions',
         diets: [],
-        image: ''
+        image: 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png'
     })
-
 
     useEffect(() => {
         dispatch(fetchDiets());
-    }, [dispatch])
+        dispatch(fetchRecipes());
+    }, [])
     
     function handleChange(e) {
         setInput({
             ...input,
-            [e.target.name]: [e.target.value]
+            [e.target.name]: e.target.value
         })
+        setErrors(validate({
+            ...input,
+            [e.target.name] : e.target.value
+        }))
     }
 
     function handleCheck(e) {
@@ -42,86 +76,145 @@ export default function CreateRecipe() {
                 ...input,
                 diets: [...input.diets, e.target.value]
             })
-            console.log(input)
+        } else {
+            let filteredDiets = input.diets.filter(diet => { return diet !== e.target.value })
+            setInput({
+                ...input,
+                diets: filteredDiets
+            })
         }
+
+    }
+    
+    // Funcion para agregar y eliminar instruccioens
+    function handleInstruction() {
+        setInstructionList([...instructionList, {step: ''}])
+    }
+    function handleRemove (index) {
+        const list = [...instructionList];
+        list.splice(index, 1);
+        setInstructionList(list)
+    }
+    
+    // Funcion para tomar instrucciones
+    function handleInstructionChange(e, index) {
+        const { name, value} = e.target;
+        const list = [...instructionList];
+        list[index][name] = value;
+        setInstructionList(list);
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(input);
-        dispatch(createProduct(input));
+        input.step_by_step = instructionList
+        console.log(instructionList)
+        dispatch(createRecipe(input, history));
         alert('Receta Creada Satisfactoriamente');
         setInput({
             name: '',
             resume: '',
             health_score: 0,
-            step_by_step: '',
+            step_by_step: {},
             diets: [],
             image: ''
         })
-        history.push('/home')
     }
 
     return (
-        <div className="form-general">
+        <div>    
+          
+             <NavBar></NavBar>
+    
             <h1>CREAR RECETA</h1>
-            <div className="form">
+            <div className='form-general'>
                 <form onSubmit={(e) => handleSubmit(e)}>
+                        <label>Name: </label>
                     <div>
-                        <label>Nombre: </label>
                         <input
                         type='text'
                         value={input.name}
                         name='name'
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(e)}
+                        placeholder='Name...'
+                        className={errors.name && 'danger'}
                         />
+                        {errors.name && (
+                            <p className="error">{errors.name}</p>
+                        )}
                     </div> 
-                    <div>
                         <label>Resume: </label>
+                    <div>
                         <input
                         type='text'
                         value={input.resume}
                         name='resume'
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(e)}
+                        placeholder='Resume...'
+                        className={errors.resume && 'danger'}
                         />
+                         {errors.resume && (
+                            <p className="error">{errors.resume}</p>
+                        )}
                     </div>     
-                    <div>
                         <label>HealthScore: </label>
-                        <input
-                        type='number'
-                        value={input.health_score}
-                        name='health_score'
-                        onChange={handleChange}
-                        />
-                    </div>       
                     <div>
-                        <label>Paso a Paso: </label>
                         <input
                         type='text'
-                        value={input.step_by_step}
-                        name='step_by_step'
-                        onChange={handleChange}
+                        value={input.health_score}
+                        name='health_score'
+                        onChange={(e) => handleChange(e)}
+                        className={ (errors.HealthscoreNotNum || errors.HealthscoreMaxMin || errors.HealthscoreNull) && 'danger'}
                         />
-                    </div>
+                         {errors.HealthscoreMaxMin && (
+                            <p className="error">{errors.HealthscoreMaxMin}</p>
+                        )}
+                        {errors.HealthscoreNotNum && (
+                            <p className="error">{errors.HealthscoreNotNum}</p>
+                        )}
+                        {errors.HealthscoreNull && (
+                            <p className="error">{errors.HealthscoreNull}</p>
+                        )}
+                    </div>     
+
+                    <span>Instruction(s):</span>
+                        {instructionList.map((singleInstruction, index) => {
+                            return (
+                                <div key = {index} className='INSTRUCTIONS'>
+                                    <div>
+                                        <span>Step {index + 1} : </span>
+                                        <input name='step' onChange={(e) => handleInstructionChange(e, index) } value={singleInstruction.step}  ></input>
+                                        {instructionList.length - 1 === index && instructionList.length < 4 && 
+                                        <button type='button' className="add-btn" onClick={() => handleInstruction()}>Add</button>
+                                        }
+                                    </div>
+                                    <div>
+                                        {instructionList.length > 1 && 
+                                        <button className="rmv-btn" type='button' onClick={(e) => handleRemove(index)}> Remove </button>
+                                        }
+                                    </div>
+                                </div>
+                            )
+                        })}
                     <div>
                         <label>Imagen: </label>
                         <input
                         type='text'
                         value={input.image}
                         name='image'
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(e)}
+                        placeholder='put image..'
                         />
                     </div>    
+
                     <div className="diets">
-                        <label> STATUS </label>
+                        <label> Select Diets </label>
                         {dietsfetched.map((diets) => {
 
-                                return (
-                                
-                                <label><br></br><input
+                                return (                               
+                                <label key= {diets.id} ><br></br><input
                                 type='checkbox'
                                 name='diets'
-                                value={diets.name}
+                                value={diets.id}
                                 onChange={handleCheck}
                                 ></input>{diets.name}</label>
                                 
@@ -129,11 +222,12 @@ export default function CreateRecipe() {
                             
                             })
                         }                 
-                    </div>    
+                    </div>   
+                    <br></br> 
                     <button type='submit'> CREAR RECETA </button> 
                 </form>
             </div>
-            
+
         </div>
     )
 }

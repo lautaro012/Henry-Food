@@ -14,17 +14,16 @@ router.get('/', async (req, res, next) => {
 
         if(diets.length === 0 ) {
             let dietsdefault = [ 
-                "Gluten Free",
-                "Ketogenic",
-                "Vegetarian",
-                "Lacto-Vegetarian",
-                "Ovo-Vegetarian",
-                "Vegan",
-                "Pescetarian",
-                "Paleo",
-                "Primal",
-                "Low FODMAP",
-                "Whole30"
+                                "gluten free",
+                                "dairy free",          
+                                "ketogenic",           
+                                "lacto ovo vegetarian",
+                                "vegan",               
+                                "pescatarian",         
+                                "paleolithic",         
+                                "primal",              
+                                "fodmap friendly",     
+                                "whole 30"
             ]
     
 
@@ -37,7 +36,8 @@ router.get('/', async (req, res, next) => {
 
             Promise.all(promises)
             .then((value) => {
-                Diet.findAll().then(diets => {
+                Diet.findAll()
+                .then(diets => {
                     return res.send(value)
                 })
             })

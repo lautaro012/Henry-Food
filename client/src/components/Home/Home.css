@@ -1,10 +1,16 @@
-.conteiner-general {
-    display:inline-flex
-}
 
+
+.FILTERS_AND_RECIPES {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: whitesmoke;
+}
 .FILTERS {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: whitesmoke;
+    background-color: rgb(200, 200, 200);
+}
+.RECIPES_CONTEINER {
+
 }

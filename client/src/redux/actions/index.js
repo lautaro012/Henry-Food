@@ -6,8 +6,8 @@ export const FETCH_DIET = 'FETCH_DIET'
 export const FILTER_BY_DIET = 'FILTER_BY_DIET'
 export const FILTER_CREATED = 'FILTER_CREATED'
 export const FETCH_DETAILS = 'FETCH_DETAILS'
-export const ORDER_BY_NAME = 'ORDER_BY_NAME'
-export const ORDER_BY_RATE = 'ORDER_BY_RATE'
+export const ORDER = 'ORDER'
+
 
 export function fetchRecipes(name) {
     if(name) {
@@ -56,16 +56,6 @@ export function fetchRecipeDetail(id) {
                         payload: recipe
                     })
                 })
-            } else {
-                fetch(`https://api.spoonacular.com/recipes/${id}/information`)
-                .then(res => res.json())
-                .then(recipe => {
-                    console.log(recipe)
-                    dispatch({
-                        type: FETCH_DETAILS,
-                        payload: recipe
-                    })
-                })
             } 
         } catch (error) {
             console.log(error)
@@ -96,7 +86,7 @@ export function fetchDiets() {
     }
 }
 
-export const createProduct = function(payload) {
+export const createRecipe = function(payload, history) {
     return function(dispatch) {
         try {
             fetch('http://localhost:3001/api/Recipe', {
@@ -109,7 +99,22 @@ export const createProduct = function(payload) {
     
             })
             .then(response => response.json())
-            .then(res => console.log(res))
+            .then(recipe => {
+                console.log(recipe)
+                let promises = payload.diets.map(diet => {
+                    return fetch(`http://localhost:3001/api/Recipe/${recipe.id}/diet/${diet}`, {
+                        method: 'POST'
+                    })
+                })
+
+                Promise.all(promises).then(
+                    dispatch({
+                        type:CREATE_RECIPE,
+                        payload: recipe
+                    })
+                )
+                history.push("/Recipe/" + recipe.id)
+            })
             
         } catch (error) {
             console.log('error PORQUE:' + error)
@@ -142,16 +147,10 @@ export const createProduct = function(payload) {
     }
   }
 
-  export const orderByName = function(payload) {
+  export const order = function(payload) {
     return {
-        type: ORDER_BY_NAME,
+        type: ORDER,
         payload
     }
   }
 
-  export const orderByRate = function(payload) {
-    return {
-        type: ORDER_BY_RATE,
-        payload
-    }
-  }

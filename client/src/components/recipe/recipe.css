@@ -1,26 +1,23 @@
 .recipe-conteiner {
-    display: inline-flex;
-    flex-direction: column;
-    background-color: whitesmoke;
-    border: black solid;
-    width: 550px;
-    height: 300px;
+    border: solid black ;
 }
 
-.name {
-    height: 60px;
-    justify-content: center;
-    align-items: center;
-
-}
-
-.IMG_HS {
+.card {
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    margin: 2rem 1rem 2rem
+}
 
+.SCORE_Y_DIETS {
+    display: flex;
+    justify-content: space-around;
 }
 
 .Link {
-    border: solid black 1px
+    text-decoration: none;
+    color: black;
+}
+
+.image {
+    max-width: 300px;
+    max-height: 400px;
 }
