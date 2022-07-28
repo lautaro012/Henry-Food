@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRecipes, fetchDiets, filteredRecipeByDiet, order  } from '../../redux/actions/index';
+import { fetchRecipes, fetchDiets, filteredRecipeByDiet, order, filterCreated, filterByDish  } from '../../redux/actions/index';
 import Recipe from '../recipe/recipe';
 import Paginado from '../Paginado/Paginado';
 import NavBar from '../NavBar/NavBar';
 import './Home.css'
+import { Recipefav } from '../RecipeFav/Recipefav';
+
 
 export default function Home() {
     
@@ -13,6 +15,8 @@ export default function Home() {
      //statetoprops
     let recipes = useSelector(state => state.recipes)
     let diets = useSelector(state => state.diets)
+    let dish = useSelector(state => state.dish)
+    
 
     //Paginado
     const [currentPage, setCurrentPage] = useState(1)
@@ -24,21 +28,33 @@ export default function Home() {
     const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
 
     const [render, setRender] = useState('')
-
+    var dietsToFilter = []
+    var dishToFilter = []
 
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
     }
 
+    function handleCheck(e) {
+        if(e.target.checked){
+            dietsToFilter.push(e.target.value)
+        } 
+        console.log(dietsToFilter)
+        if(!e.target.checked) {
+            dietsToFilter = dietsToFilter.filter(diet => diet !== e.targe.value)
+        }
+        filterbydiet(dietsToFilter)
+    }
 
-
-    function handleFilterRecipe(e) {
-        dispatch(filteredRecipeByDiet(e.target.value))
-        // console.log(e.target.value)
+    function filterbydiet(diets) {
+        dispatch(filteredRecipeByDiet(diets));
         setCurrentPage(1);
     }
 
-
+    function handleMyRecipes(e) {
+        dispatch(filterCreated(e.target.value))
+        // console.log(e.target.value)
+    }
 
     function handleSort(e) {
         e.preventDefault();
@@ -49,69 +65,162 @@ export default function Home() {
         setRender(`${render} renderizado`);
     }
 
+    function handleCheckDish(e) {
+        if(e.target.checked){
+            dishToFilter.push(e.target.value)
+        } 
+        if(!e.target.checked) {
+            dishToFilter = dishToFilter.filter(dish => dish !== e.target.value)
+        }
+
+        filteredByDish(dishToFilter)
+    }
+    
+    function filteredByDish(diets) {
+        dispatch(filterByDish(diets));
+        setCurrentPage(1);
+    }
+
     //dispatchtoprops
     useEffect(() => {
         dispatch(fetchDiets());
         dispatch(fetchRecipes());   
     }, [dispatch])          
 
-    
+    function refresh(){
+        window.location.reload("Refresh")
+      }
 
     return <div>
                 <div className='conteiner-general'>
-                    <NavBar></NavBar>
+
+                    <div className='CONTEINER-NAV'>
+                        <NavBar></NavBar>
+                    </div>
+
                     <div className='FILTERS_AND_RECIPES'>
+
+
                         <div className='FILTERS'>
-                            ORDENAR POR 
+                        <div className='FIXED-FILTER'>
+                        <div className='FILTER-NAME'>
+                        <span> Search by : </span>
+                        </div>
+                    
+                        <details>
+                          
+                          
+                            <summary> Name/Rate </summary>
                             <select id='orderBy' onChange={(e) => handleSort(e)} defaultValue='orderBy'>
                                 <option value= 'name'> Nombre </option>
                                 <option value= 'health_score'> Rate </option>
                             </select>
+                            <br>
+                            </br>
+                           
+                           
+                            <span>In What Order ?</span>
+
+                                <select id='orderType' onChange={(e) => handleSort(e)} defaultValue='orderType'>
+                                    <option value= 'asc'> Ascendente </option>
+                                    <option value= 'des'> Descendente </option>
+                                </select>
+
+                        </details>  
+
                         
+                        <p> Filter by : </p>
                             <br></br>
-                        
-                            EN ORDEN
-                            <select id='orderType' onChange={(e) => handleSort(e)} defaultValue='orderType'>
-                                <option value= 'asc'> Ascendente </option>
-                                <option value= 'des'> Descendente </option>
-                            </select>
-    
-                                <br></br>
-                            FILTRAR POR RECETA
-                            <select onChange={(e) => handleFilterRecipe(e)} >
-                                <option value= 'all'> Todas </option>
-                            {diets?.map(diet => {
+                            <details>
+                                <summary> Recipes: </summary>
+                                
+                                {diets?.map((diets) => {
                                 return (
-                                    <option value={diet.name} key = {diet.id}>
-                                        {diet.name}
-                                    </option>
+                                    <label key= {diets.id} ><br></br><input
+                                    key= {diets.name}
+                                    type='checkbox'
+                                    name='diets'
+                                    value={diets.name}
+                                    onClick={handleCheck}
+                                    ></input>{diets.name}</label>
                                 )
-                            })}
-                            </select>
+                                })}
+
+                        </details>
                         
-                            <br></br>   
+                        <details>
+                            <summary> Dish Types: </summary>
+
+                            {dish?.map((dish) => {
+                                    return (
+                                        <label ><br></br><input
+                                        
+                                        type='checkbox' 
+                                        name='dish'
+                                        value={dish}
+                                        onChange={handleCheckDish}
+                                        ></input>{dish}</label>
+                                    )
+                                    })}
+                        </details>  
+
+                        <button onClick={(e) => handleMyRecipes(e)}>
+                            MIS RECETAS
+                        </button>
                         
+                     
 
                         </div>
-                        <div className='RECIPES_CONTEINER' >
-                            {/* mapeo el slice de recetas/recetas filtradas */}
-                            {currentRecipes.map((recipe) => {  
-                                return <Recipe 
-                                        recipe={recipe}
-                                        key={recipe.id}
-                                        />
-                            }) }    
+
+
+                        </div>
+
+
+                        <div className='RECIPES-CONTEINER' >
+                            {/* 312 x 213 */}
+                        
+                            { currentRecipes.length ?
+                                currentRecipes.map((recipe) => {  
+                                    return <Recipe 
+                                            recipe={recipe}
+                                            key={recipe.id}
+                                            />
+                                }) :
+                                <div>
+                                    NO SE ENCONTRARON RECETAS
+                                    <button onClick={refresh}>VOLVER A INTENTAR</button>
+                                </div>
+                            
+                            }    
+                        
                         </div>
                     </div>
             </div>
 
 
-
+            { currentRecipes.length ?
                 <Paginado
                 recipesPerPage = {recipesPerPage}
                 allRecipes = {recipes.length}
                 paginado = {paginado}
-                />
+                /> :
+                null
+            }    
+               
+            { recipes.length ?
+                <h2> RECETAS POPULARES </h2> :
+                null
+            }
+            <div className='favs'>
+                {recipes?.map(recipe => {
+                    if(recipe.veryPopular) {
+                        return <Recipefav 
+                                recipe={recipe}
+                                key={recipe.id}/>
+                    }
+                })}
+            </div>              
+
 
         </div>
 }

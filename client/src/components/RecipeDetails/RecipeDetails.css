@@ -1,16 +1,80 @@
-.INGREDIENTS {
-    background-color: whitesmoke;
-    width:fit-content;
-}
-
-.conteiner {
+.INGREDIENTS-RECIPE-EMPTY {
     display: flex;
-    background-color: azure;
+    padding-top: 40px;
+    flex-direction: row;
 }
 
-.imgandicons {
+.INGREDIENTS {
+    position: -webkit-sticky; /* Safari & IE */
+    position: sticky;
+    top: 0;
+    padding-top: 40px;
+}
+
+.INGREDIENTS-CONTEINER {
+    width: 20%;
+}
+
+.RECIPE-DETAILS {
+    width: 65%;
+    padding: 4rem;
+}
+
+.EMPTY {
+    width: 15%;
+}
+
+.IMAGE-DET {
+    width: 50%;
+}
+
+.DETAILS {
+    display: flex;
+    flex-direction: row;
+}
+
+.NAME-SCORE {
+    display: flex;
+    height: 50%;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.SCORE{
+    display: flex;
+    flex-direction: column;
+}
+
+.NUMBER-HRT {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+    
+.NAME{
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    align-content: center;
+}
+
+
+.SHOW-DIETS{
+    display: flex;
+    height: 50%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.IMAGE-DETAIL{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.BESIDE-IMG {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
 }
 

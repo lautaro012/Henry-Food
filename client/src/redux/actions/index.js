@@ -7,6 +7,8 @@ export const FILTER_BY_DIET = 'FILTER_BY_DIET'
 export const FILTER_CREATED = 'FILTER_CREATED'
 export const FETCH_DETAILS = 'FETCH_DETAILS'
 export const ORDER = 'ORDER'
+export const FILTER_BY_CHEAP = 'FILTER_BY_CHEAP'
+export const FILTER_BY_DISH = 'FILTER_BY_DISH'
 
 
 export function fetchRecipes(name) {
@@ -26,6 +28,7 @@ export function fetchRecipes(name) {
             fetch('http://localhost:3001/api/Recipe')
             .then(resp => resp.json())
             .then((recipes) => {
+                
                 dispatch({
                     type: FETCH_RECIPE,
                     payload: recipes
@@ -50,7 +53,7 @@ export function fetchRecipeDetail(id) {
                 fetch(`http://localhost:3001/api/Recipe/${id}`)
                 .then(res => res.json())
                 .then(recipe => {
-                    console.log(recipe)
+                    
                     dispatch({
                         type: FETCH_DETAILS,
                         payload: recipe
@@ -100,7 +103,7 @@ export const createRecipe = function(payload, history) {
             })
             .then(response => response.json())
             .then(recipe => {
-                console.log(recipe)
+               
                 let promises = payload.diets.map(diet => {
                     return fetch(`http://localhost:3001/api/Recipe/${recipe.id}/diet/${diet}`, {
                         method: 'POST'
@@ -125,17 +128,23 @@ export const createRecipe = function(payload, history) {
   };
   
   
-//   export const deleteProduct = function(recipeID) {
-//     return {
-//         type: DELETE_RECIPE,
-//         payload: recipeID
-//     }
-//   };
-
+export const filterRecipeByCheap = function(payload) {
+    return {
+        type: FILTER_BY_CHEAP,
+        payload
+    }
+}
 
   export const filteredRecipeByDiet = function(payload) {
     return {
         type: FILTER_BY_DIET,
+        payload
+    }
+  }
+
+  export const filterByDish = function(payload) {
+    return {
+        type: FILTER_BY_DISH,
         payload
     }
   }

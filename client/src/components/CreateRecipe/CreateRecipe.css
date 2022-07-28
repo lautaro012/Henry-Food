@@ -25,4 +25,18 @@
 input.danger {
     border: 2px solid red;
 }
-  
+
+.INGREDIENTS-INSTRUCCIONS {
+    display: flex;
+    flex-direction: row;
+}
+
+.INGREDIENTS {
+    display: flex;
+    flex-direction: column;
+}
+
+.INSTRUCCIONS {
+    display: flex;
+    flex-direction: column;
+}

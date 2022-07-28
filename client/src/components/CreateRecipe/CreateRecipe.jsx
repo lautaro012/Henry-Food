@@ -43,6 +43,9 @@ export default function CreateRecipe() {
     const [instructionList, setInstructionList] = useState([
         {Step: ''},
     ])
+    const [ingredientList, setIngredientsList] = useState([
+        {Ingredient: ''} ,
+    ])
     //lo que necesita mi POST:  
     const [input, setInput] = useState({
         name: '',
@@ -50,7 +53,8 @@ export default function CreateRecipe() {
         health_score: 1,
         step_by_step: 'There are no instructions',
         diets: [],
-        image: 'https://www.salonlfc.com/wp-content/uploads/2018/01/image-not-found-scaled-1150x647.png'
+        image: '',
+        extendedIngredients: 'There are no Ingredients'
     })
 
     useEffect(() => {
@@ -106,8 +110,8 @@ export default function CreateRecipe() {
 
     function handleSubmit(e) {
         e.preventDefault();
+        input.extendedIngredients = ingredientList
         input.step_by_step = instructionList
-        console.log(instructionList)
         dispatch(createRecipe(input, history));
         alert('Receta Creada Satisfactoriamente');
         setInput({
@@ -116,9 +120,28 @@ export default function CreateRecipe() {
             health_score: 0,
             step_by_step: {},
             diets: [],
-            image: ''
+            image: '',
+            extendedIngredients: {}
         })
     }
+
+    function handleIngredient() {
+        setIngredientsList([...ingredientList, {Ingredient: ''}])
+    }
+    function handleRemoveIngredient (index) {
+        const list = [...ingredientList];
+        list.splice(index, 1);
+        setIngredientsList(list)
+    }
+    
+    // Funcion para tomar instrucciones
+    function handleIngredientChange(e, index) {
+        const { name, value} = e.target;
+        const list = [...ingredientList];
+        list[index][name] = value;
+        setIngredientsList(list);
+    }
+
 
     return (
         <div>    
@@ -176,25 +199,52 @@ export default function CreateRecipe() {
                         )}
                     </div>     
 
-                    <span>Instruction(s):</span>
-                        {instructionList.map((singleInstruction, index) => {
-                            return (
-                                <div key = {index} className='INSTRUCTIONS'>
-                                    <div>
-                                        <span>Step {index + 1} : </span>
-                                        <input name='step' onChange={(e) => handleInstructionChange(e, index) } value={singleInstruction.step}  ></input>
-                                        {instructionList.length - 1 === index && instructionList.length < 4 && 
-                                        <button type='button' className="add-btn" onClick={() => handleInstruction()}>Add</button>
-                                        }
-                                    </div>
-                                    <div>
-                                        {instructionList.length > 1 && 
-                                        <button className="rmv-btn" type='button' onClick={(e) => handleRemove(index)}> Remove </button>
-                                        }
-                                    </div>
-                                </div>
-                            )
-                        })}
+                    <div className="INGREDIENTS-INSTRUCCIONS">
+
+                        <div className="INSTRUCCIONS">
+                            <span>Instruction(s):</span>
+                                {instructionList.map((singleInstruction, index) => {
+                                    return (
+                                        <div key = {index} className='INSTRUCTIONS'>
+                                            <div>
+                                                <span>Step {index + 1} : </span>
+                                                <input name='step' onChange={(e) => handleInstructionChange(e, index) } value={singleInstruction.step}  ></input>
+                                                {instructionList.length - 1 === index && instructionList.length < 4 && 
+                                                <button type='button' className="add-btn" onClick={() => handleInstruction()}>Add</button>
+                                                }
+                                            </div>
+                                            <div>
+                                                {instructionList.length > 1 && 
+                                                <button className="rmv-btn" type='button' onClick={(e) => handleRemove(index)}> Remove </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                        </div>
+
+                        <div className="INGREDIENTS">
+                            <span>Ingredients :</span>
+                                {ingredientList.map((singleIngredient, index) => {
+                                    return (
+                                        <div key = {index} className='INSTRUCTIONS'>
+                                            <div>
+                                                <span>Ingredient : </span>
+                                                <input name='Ingredient' onChange={(e) => handleIngredientChange(e, index) } value={singleIngredient.step}  ></input>
+                                                {ingredientList.length - 1 === index && ingredientList.length < 4 && 
+                                                <button type='button' className="add-btn" onClick={() => handleIngredient()}>Add</button>
+                                                }
+                                            </div>
+                                            <div>
+                                                {ingredientList.length > 1 && 
+                                                <button className="rmv-btn" type='button' onClick={(e) => handleRemoveIngredient(index)}> Remove </button>
+                                                }
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                        </div>
+                    </div>
                     <div>
                         <label>Imagen: </label>
                         <input

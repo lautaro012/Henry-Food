@@ -1,14 +1,16 @@
 import React from "react";
 import { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { fetchRecipes, FETCH_RECIPE, filterCreated } from "../../redux/actions";
-import { Link } from 'react-router-dom';
+import { fetchRecipes } from "../../redux/actions";
+import { Link, useHistory } from 'react-router-dom';
 import './NavBar.css'
 
 
 export default function NavBar() { 
     let dispatch = useDispatch()
-  
+    const history = useHistory();
+
+    const navigateTo = () => history.push('/home');
 
     const [name, setName] = useState('')
      
@@ -24,21 +26,15 @@ export default function NavBar() {
     }
     
 
-    function handleMyRecipes(e) {
-        dispatch(filterCreated(e.target.value))
-        // console.log(e.target.value)
-    }
 
 
     return (
-        
         <div className='NAVBAR'>
 
-            <Link to='/home'>
-            <button>
+            <button onClick={navigateTo} className="HOME-BTN">
                 HOME
             </button>
-            </Link>
+            
 
         <br></br>
 
@@ -59,10 +55,6 @@ export default function NavBar() {
             <Link to='/CreateRecipe'>
                 <button> CREAR RECETA </button>
             </Link>
-
-            <button onClick={(e) => handleMyRecipes(e)}>
-                MIS RECETAS
-            </button>
 
         </div>
 

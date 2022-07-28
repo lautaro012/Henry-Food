@@ -1,19 +1,13 @@
 const { Router } = require('express');
 const { Recipe, Diet } = require('../db');
 const { Op } = require('sequelize');
-const axios = require('axios')
+const axios = require('axios');
+require('dotenv').config();
+const {
+    YOUR_API_KEY,
+  } = process.env;
 
-// const YOUR_API_KEY = '6f8483e9e0d147498227b6f04df7a4b8'
 
-const YOUR_API_KEY = '19ed143a2218472f8e3ab6f1d2ae6b4b'
-
-// const YOUR_API_KEY = '3e53167df35647c19dfd101a5233dbc5'
-
-// const YOUR_API_KEY = 'be5300dbbf044534a95cd8b9e861ed56'
-
-// const YOUR_API_KEY = '35a39f22390440e9a4557b2ef96f28cf'
-
-// const YOUR_API_KEY = '6578d9b882e7494b9ace55114866764c'
 
 const router = Router();
 

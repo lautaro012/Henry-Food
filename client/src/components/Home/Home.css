@@ -1,16 +1,69 @@
+.conteiner-general {
+
+    background-color: #FFDEE9;
+background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+
+}
+
+.favs {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+}
+
+.CONTEINER-NAV {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+}
 
 
 .FILTERS_AND_RECIPES {
     display: flex;
-    justify-content: space-evenly;
-    background-color: whitesmoke;
+    justify-content: space-around;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 7%;
+
 }
 .FILTERS {
     display: flex;
+    border-right: 1px solid aqua;
+    padding: 0.5rem;
+    flex-wrap: wrap;
+    align-content: flex-start;
     flex-direction: column;
-    align-items: center;
-    background-color: rgb(200, 200, 200);
+    width: 20%;
 }
-.RECIPES_CONTEINER {
 
+
+.RECIPES-CONTEINER {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+}
+
+.CHEAP-BTN {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.FIXED-FILTER {
+    position: fixed;
+}
+
+.NOMBRE-Y-DETALLES {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.FILTER-NAME {
+    border-bottom: solid  ;
 }
