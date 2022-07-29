@@ -28,6 +28,7 @@ export function fetchRecipes(name) {
                     payload: recipes
                 })
             })
+            .catch(error => console.log(error))
         }
     } else {
         return function(dispatch) {
