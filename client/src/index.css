@@ -1,12 +1,8 @@
 body {
-  
-  background-color: #FFDEE9;
-  background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
-  
+  font-family: "Roboto", sans-serif;
+  text-shadow: 0.5px 0.5px 0 #cccccc;
+  /* background-image: url('../src/components/diet-icons/WALLPAPER.jpg'); */
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Cascadia Code' ,
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

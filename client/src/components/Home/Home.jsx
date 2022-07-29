@@ -6,6 +6,8 @@ import Paginado from '../Paginado/Paginado';
 import NavBar from '../NavBar/NavBar';
 import './Home.css'
 import { Recipefav } from '../RecipeFav/Recipefav';
+import NotFound from '../diet-icons/icons/NotFound'
+
 
 
 export default function Home() {
@@ -16,7 +18,7 @@ export default function Home() {
     let recipes = useSelector(state => state.recipes)
     let diets = useSelector(state => state.diets)
     let dish = useSelector(state => state.dish)
-    
+    let Allrecipes = useSelector(state => state.Allrecipes)
 
     //Paginado
     const [currentPage, setCurrentPage] = useState(1)
@@ -91,136 +93,115 @@ export default function Home() {
         window.location.reload("Refresh")
       }
 
-    return <div>
+    return <div className='WHOLE-PAG'>
                 <div className='conteiner-general'>
 
                     <div className='CONTEINER-NAV'>
                         <NavBar></NavBar>
                     </div>
-
                     <div className='FILTERS_AND_RECIPES'>
-
-
                         <div className='FILTERS'>
-                        <div className='FIXED-FILTER'>
-                        <div className='FILTER-NAME'>
-                        <span> Search by : </span>
+
+                            <div className='FIXED-FILTER'>
+
+                                <div className='FILTER-NAME'>
+                                <span> Search by : </span>
+                                </div>
+                                        
+                                <div className='ORDER-RECIPES'>
+                                    <span> Name/Rate </span>
+                                    <select className='SELECT-ORDER' id='orderBy' onChange={(e) => handleSort(e)} defaultValue='orderBy'>
+                                        <option value= 'name'> Name </option>
+                                        <option value= 'health_score'> Rate </option>
+                                    </select>                                                             
+                                    <span>In What Order ?</span>
+                                    <select className='SELECT-ORDER' id='orderType' onChange={(e) => handleSort(e)} defaultValue='orderType'>
+                                        <option value= 'asc'> Ascendent </option>
+                                        <option value= 'des'> Descendent </option>
+                                    </select>
+                                </div>  
+                                <div>
+                                    <details className='DETAILS-RECIPES' open>
+                                        <summary className='SUMMARY-RECIPES'> Recipes: </summary>
+                                        
+                                        {diets?.map((diets) => {
+                                        return (
+                                            <label key= {diets.id} ><br></br><input
+                                            key= {diets.name}
+                                            type='checkbox'
+                                            name='diets'
+                                            value={diets.name}
+                                            onClick={handleCheck}
+                                            ></input>{diets.name}</label>
+                                        )
+                                        })}
+
+                                    </details >
+                                </div>
+
+                                <button onClick={(e) => handleMyRecipes(e)}>
+                                    MIS RECETAS
+                                </button>
+                            </div>
+
                         </div>
                     
-                        <details>
-                          
-                          
-                            <summary> Name/Rate </summary>
-                            <select id='orderBy' onChange={(e) => handleSort(e)} defaultValue='orderBy'>
-                                <option value= 'name'> Nombre </option>
-                                <option value= 'health_score'> Rate </option>
-                            </select>
-                            <br>
-                            </br>
-                           
-                           
-                            <span>In What Order ?</span>
-
-                                <select id='orderType' onChange={(e) => handleSort(e)} defaultValue='orderType'>
-                                    <option value= 'asc'> Ascendente </option>
-                                    <option value= 'des'> Descendente </option>
-                                </select>
-
-                        </details>  
-
-                        
-                        <p> Filter by : </p>
-                            <br></br>
-                            <details>
-                                <summary> Recipes: </summary>
-                                
-                                {diets?.map((diets) => {
-                                return (
-                                    <label key= {diets.id} ><br></br><input
-                                    key= {diets.name}
-                                    type='checkbox'
-                                    name='diets'
-                                    value={diets.name}
-                                    onClick={handleCheck}
-                                    ></input>{diets.name}</label>
-                                )
-                                })}
-
-                        </details>
-                        
-                        <details>
-                            <summary> Dish Types: </summary>
-
-                            {dish?.map((dish) => {
-                                    return (
-                                        <label ><br></br><input
-                                        
-                                        type='checkbox' 
-                                        name='dish'
-                                        value={dish}
-                                        onChange={handleCheckDish}
-                                        ></input>{dish}</label>
-                                    )
-                                    })}
-                        </details>  
-
-                        <button onClick={(e) => handleMyRecipes(e)}>
-                            MIS RECETAS
-                        </button>
-                        
-                     
-
+                    
+                        {  !Allrecipes.length ?
+                            <div className='LOADING'>
+                                <span className="loader"></span> 
+                            </div>
+                            :
+                            recipes.length ?
+                            <div className='RECIPES-CONTEINER' >
+                                {/* 312 x 213 */}
+                                { 
+                                    currentRecipes.map((recipe) => {  
+                                        return <Recipe 
+                                                recipe={recipe}
+                                                key={recipe.id}
+                                                />
+                                    }) 
+                                }    
+                            </div> 
+                            :
+                            <div className='NOT-FOUND-ICON'>
+                                 <NotFound></NotFound>
+                                NO SE ENCONTRARON RECETAS
+                                <button onClick={refresh}>VOLVER A INTENTAR</button>
+                             </div>
+                        }                           
                         </div>
 
 
-                        </div>
+            
 
 
-                        <div className='RECIPES-CONTEINER' >
-                            {/* 312 x 213 */}
-                        
-                            { currentRecipes.length ?
-                                currentRecipes.map((recipe) => {  
-                                    return <Recipe 
+                    { !currentRecipes.length < 5 ?
+                        <Paginado
+                        recipesPerPage = {recipesPerPage}
+                        allRecipes = {recipes.length}
+                        paginado = {paginado}
+                        /> :
+                        null
+                    }    
+ 
+                    { recipes.length ?
+                        <div className='favs'>
+                            <span className='POPULARS'> MOST POPULARS </span> 
+                            {recipes?.map(recipe => {
+                                if(recipe.veryPopular) {
+                                    return <Recipefav 
                                             recipe={recipe}
-                                            key={recipe.id}
-                                            />
-                                }) :
-                                <div>
-                                    NO SE ENCONTRARON RECETAS
-                                    <button onClick={refresh}>VOLVER A INTENTAR</button>
-                                </div>
-                            
-                            }    
-                        
-                        </div>
-                    </div>
-            </div>
-
-
-            { currentRecipes.length ?
-                <Paginado
-                recipesPerPage = {recipesPerPage}
-                allRecipes = {recipes.length}
-                paginado = {paginado}
-                /> :
-                null
-            }    
-               
-            { recipes.length ?
-                <h2> RECETAS POPULARES </h2> :
-                null
-            }
-            <div className='favs'>
-                {recipes?.map(recipe => {
-                    if(recipe.veryPopular) {
-                        return <Recipefav 
-                                recipe={recipe}
-                                key={recipe.id}/>
+                                            key={recipe.id}/>
+                                }
+                            })}
+                        </div>  
+                        :        
+                        null
+                    
                     }
-                })}
-            </div>              
-
-
+            </div>
         </div>
+
 }

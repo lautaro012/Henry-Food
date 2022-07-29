@@ -1,8 +1,10 @@
+
 .conteiner-general {
-
-    background-color: #FFDEE9;
-background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
-
+  width: 100%;
+  height: 100%;
+  background-image: url("../diet-icons/WALLPAPER.jpg");
+  z-index: -1;
+  background-size: contain;
 }
 
 .favs {
@@ -28,20 +30,30 @@ background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
 
 }
 .FILTERS {
-    display: flex;
-    border-right: 1px solid aqua;
-    padding: 0.5rem;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    flex-direction: column;
-    width: 20%;
+  display: flex;
+  padding: 0.5rem;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  flex-direction: column;
+  width: 20%;
+}
+
+.FIXED-FILTER {
+  position: fixed;
+  border: solid 2px #dd5d26bd;
+  background: #ffffff7f;
+  backdrop-filter: blur(2px);
+  max-width: 250px;
+  max-height: 380px;
+  border-radius: 2px;
 }
 
 
 .RECIPES-CONTEINER {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  align-items: center;
 }
 
 .CHEAP-BTN {
@@ -49,14 +61,11 @@ background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: solid 2px;
+    border: solid 2px #dd5d26bd;
     padding: 0.5rem;
     border-radius: 10px;
 }
 
-.FIXED-FILTER {
-    position: fixed;
-}
 
 .NOMBRE-Y-DETALLES {
     display: flex;
@@ -65,5 +74,121 @@ background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
 }
 
 .FILTER-NAME {
-    border-bottom: solid  ;
+  border-bottom: 1px solid #000000bd;
+}
+
+
+  .loader {
+    width: 48px;
+    height: 40px;
+    margin-top: 30px;
+    display: inline-block;
+    position: relative;
+    background: #FFF;
+    border-radius: 15% 15% 35% 35%;
+  }
+  .loader::after {
+    content: '';  
+    box-sizing: border-box;
+    position: absolute;
+    left: 45px;
+    top: 8px;
+    border: 4px solid #FFF;
+    width: 16px;
+    height: 20px;
+    border-radius: 0 4px 4px 0;
+  }
+  .loader::before {
+    content: '';  
+    position: absolute;
+    width: 1px;
+    height: 10px;
+    color: #FFF;
+    top: -15px;
+    left: 11px;
+    box-sizing: border-box;
+    animation: animloader 1s ease infinite;
+  }
+  
+  @keyframes animloader {
+      0% {
+    box-shadow: 2px 0px rgba(255, 255, 255, 0), 12px 0px rgba(255, 255, 255, 0.3), 20px 0px rgba(255, 255, 255, 0);
+  }
+      50% {
+    box-shadow: 2px -5px rgba(255, 255, 255, 0.5), 12px -3px rgba(255, 255, 255, 0.5), 20px -2px rgba(255, 255, 255, 0.6);
+  }
+      100% {
+    box-shadow: 2px -8px rgba(255, 255, 255, 0), 12px -5px rgba(255, 255, 255, 0), 20px -5px rgba(255, 255, 255, 0);
+  }
+    }
+
+
+    .LOADING {
+      position: fixed;
+      background-color: black;
+      top:0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .NOT-FOUND-ICON {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #ffffff7F;
+      backdrop-filter: blur(1px);
+
+    }
+
+    .POPULARS {
+      color: #dd5d26;
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-style: italic;
+      font-weight: bolder;
+      text-shadow: 2px 2px 8px #dd5d26bd;
+    }
+
+    .DETAILS-RECIPES{
+      text-transform: uppercase;
+     font-style: italic;
+     font-weight: bolder;
+     text-shadow: 2px 2px 8px #dd5d26bd;
+    }
+
+.SUMMARY-RECIPES {
+  list-style: none;
+
+}
+
+
+.SUMMARY-RECIPES::before{
+  content: '+';
+  padding-right: 1rem;
+}
+
+.DETAILS-RECIPES[open] + .SUMMARY-RECIPES::before{
+ content: '-';
+}
+
+.ORDER-RECIPES {
+  text-transform: uppercase;
+  font-style: italic;
+  font-weight: bolder;
+  text-shadow: 2px 2px 8px #dd5d26bd;
+  display: flex;
+  flex-direction: column;
+}
+
+.SELECT-ORDER {
+  background: #ffffff7F;
+  backdrop-filter: blur(1px);
+  border: none;
+  border-bottom: 2px solid #000000bd;
 }

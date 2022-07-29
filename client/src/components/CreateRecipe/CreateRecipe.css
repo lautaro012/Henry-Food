@@ -1,22 +1,79 @@
-
-.diets {
-    display: flex;
-    width: 500px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
+.FORM {
+    background: url('../diet-icons/CREATEWALLPAPER.jpg');
+    background-size: cover;
+    min-height: 1000px;
 }
+
 
 .form-general {
     display: flex;
+    border: solid 2px;
+    border-color: #dd5d26bd;
+    flex-direction: column;
+    margin-top: 2rem;
+    margin-left: 15%;
+    margin-right: 15%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+    padding-top: 5rem;
+    background-color: #ffffff7f;
+    backdrop-filter: blur(4px);
+}
+
+.FORM-INPUT {
+    width: 80%;
+    margin-left: 1rem;
+    border: none;
+    border-bottom: solid 1px;
+    background-color: #ffffff7f;
+    backdrop-filter: blur(4px);
+}
+
+.RECIPE-ICON {
+    display: flex;
+    align-content: center;
     justify-content: center;
-    background-color: whitesmoke;
-}
-.card-created {
-    pointer-events: none;
 }
 
+.ICON-RECIPE {
+    position: absolute;
+    right: 40%;
+    bottom: 80%;
+}
 
+.FORM-RESUME {
+    width: 683px;
+    height: 140px;
+    background-color: #ffffff7f;
+    backdrop-filter: blur(4px);
+    border: solid navajowhite;
+    padding-left: 1rem;
+    resize: none;
+    box-sizing: border-box;
+    padding-right: 1rem;
+}
+
+.INSTRUCTIONS {
+    display: flex;
+    flex-direction: row;
+}
+.INSTRUCTIONS-BTNS {
+    display: flex;
+    flex-direction: row;
+}
+
+.INPUT-STEPS{
+    width: 60%;
+    border-color: navajowhite;
+    background-color: #ffffff7f;
+    backdrop-filter: blur(4px);
+}
+.INPUT-INSTR{
+    background-color: #ffffff7f;
+    backdrop-filter: blur(4px);
+    width: 70%;
+}
 .error {
     color: red;
     font-size: 10px;
@@ -28,15 +85,79 @@ input.danger {
 
 .INGREDIENTS-INSTRUCCIONS {
     display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.FORM-INGREDIENTS {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+}
+.FORM-INSTRUCCIONS {
+    width: 65%;
+}
+
+.DISABLE {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.SUBMIT-RECIPE {
+    background-color: #ffffff7f;
+    backdrop-filter: blur(4px);
+}
+
+.FORM-IMG-HS {
+    display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 3rem;
 }
 
-.INGREDIENTS {
+.INPUT-HS {
     display: flex;
-    flex-direction: column;
+    width: 3rem;
+    height: 3rem;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    background-color: #ffffff7f;
+    backdrop-filter: blur(4px);
 }
 
-.INSTRUCCIONS {
+.FORM-IMG{
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    width: 30%;
 }
+
+.DANGER {
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+.FORM-DIETS {
+    text-transform: uppercase;
+    font-style: italic;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    border: 2px solid navajowhite;
+}
+
+.FORM-DIET-LABEL {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    padding: 1rem;
+}
+
+

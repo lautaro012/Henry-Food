@@ -8,14 +8,22 @@ import * as icons from '../diet-icons/DietIcons'
 import Hand from '../diet-icons/icons/Hand'
 import Heart from '../diet-icons/icons/Heart'
 
+require('dotenv').config();
+const {
+  REACT_APP_API
+} = process.env;
+
 
 
 export default function RecipeDetails(props) {
+    console.log(process.env)   
+    console.log(REACT_APP_API) 
+
 
     const id = props.match.params.id
     
     let recipeDetails = useSelector(state => state.recipeDetails)
-    console.log(recipeDetails.step_by_step)
+    console.log(recipeDetails)
     let dispatch = useDispatch()
     console.log(recipeDetails)
     useEffect(() => {
@@ -36,9 +44,9 @@ export default function RecipeDetails(props) {
     }
 
 
-    
+ 
     return (
-        <div className="conteiner-general">
+        <div className="background">
             <div className='CONTEINER-NAV'>
                 <NavBar></NavBar>
             </div>
@@ -47,12 +55,23 @@ export default function RecipeDetails(props) {
                 <div className="INGREDIENTS-CONTEINER">
                     <div className="INGREDIENTS">
                         <summary>Ingredients:</summary>
-                        <ul>
-                        {recipeDetails.extendedIngredients?.map((ingredients, index) => {
+                        <ul className="LIST-OF-INGREDIENTS">
+                        { id.length > 8 ?
+                            recipeDetails.extendedIngredients === {} ?
+                            <p className="STEPS-WRITED"> There are no Ingredients.</p>
+                            :
+                            recipeDetails.extendedIngredients?.map((ingredients, index) => {
+                                return (
+                                        <li key={index} >{JSON.parse(ingredients).Ingredient}</li>
+                                        )
+                                    })
+                            :
+                        recipeDetails.extendedIngredients?.map((ingredients, index) => {
                             return (
                                     <li key={index} >{ingredients}</li>
                                     )
-                                })}
+                                })         
+                            }     
                          </ul>
 
                     </div>
@@ -67,13 +86,13 @@ export default function RecipeDetails(props) {
                                 <div className="NAME-SCORE">
                                     <div className="SCORE">
                                         <div className="NUMBER-HRT">
-                                        <span>{recipeDetails.health_score}</span>
+                                        <span>{recipeDetails.health_score}  </span>
                                         <Heart fill={"#dd5d26"} className='HEART'/>
                                         </div>
                                         <Hand fill={"#dd5d26"} className='HAND'/>
                                     </div>
                                     <div className="NAME">  
-                                        <h1>{recipeDetails.name}</h1>
+                                        <h1 >{recipeDetails.name}</h1>
                                     </div>
                                 </div>
                                 <div className="SHOW-DIETS">
@@ -91,26 +110,38 @@ export default function RecipeDetails(props) {
                             </div>
                         </div>
                             <div className="SHOW-RESUME">
-                                <p>
+                                <p className="STEPS-WRITED">
                                  {/* {replace para sacar el href} */}
                                  {recipeDetails.resume?.replace(/<[^>]+>/g, '')}
                                 </p>
                             </div>
                     </div>
+
                     <div className="STEPS">
-                        { typeof recipeDetails.step_by_step === 'string' ?
-                            recipeDetails.step_by_step :
-                            recipeDetails.step_by_step?.map((step) => {
-                            return (
-                                <div key = {step.number}>
-                                    <h1>Step {step.number} </h1>
-                                    {step.step ? 
-                                    <p> {step.step} </p> :
-                                    <p> {step} </p>
-                                    }
-                                </div>
-                            )
-                            })}
+                        { id.length < 8 ?
+                            typeof recipeDetails.step_by_step === 'string' ?
+                                <div className="STEPS-WRITED"> {recipeDetails.step_by_step} </div>
+                                :
+                                recipeDetails.step_by_step?.map((step) => {
+                                    return ( 
+                                        <div key = {step.number}>
+                                            <h1>Step {step.number} </h1>
+                                            {step.step ? 
+                                            <p className="STEPS-WRITED"> {step.step} </p> :
+                                            <p className="STEPS-WRITED"> {step} </p>
+                                        }
+                                        </div>
+                                        )})
+                                        :
+                                        recipeDetails.step_by_step?.map((step, index) => {
+                                            return ( 
+                                                <div key = {index}>
+                                                    <h1>Step {index + 1} </h1>
+                                                    <p className="STEPS-WRITED"> {JSON.parse(step).Step} </p>
+                                                </div>
+                                            )
+                                        }) 
+                            }
                     </div>
                 </div>
                 <div className="EMPTY">

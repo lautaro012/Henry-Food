@@ -4,7 +4,9 @@ import { useDispatch } from "react-redux";
 import { fetchRecipes } from "../../redux/actions";
 import { Link, useHistory } from 'react-router-dom';
 import './NavBar.css'
-
+import CreateRecipe from '../diet-icons/icons/Create'
+import Home from '../diet-icons/icons/Home'
+import Lupa from '../diet-icons/icons/Lupa'
 
 export default function NavBar() { 
     let dispatch = useDispatch()
@@ -30,31 +32,34 @@ export default function NavBar() {
 
     return (
         <div className='NAVBAR'>
+           
 
-            <button onClick={navigateTo} className="HOME-BTN">
-                HOME
-            </button>
+                <button onClick={navigateTo} className='HOME-BTN'>
+                    <Home fill={'#dd5d26'}></Home>
+                </button>   
+
+            <div className="NAV-SEARCH">
+                <input
+                className="INPUT-SEARCH"
+                type = 'text'
+                placeholder="Buscar..."    
+                onChange={(e) => handleInputChange(e)} 
+                />
+                <button
+                className="HOME-BTN"
+                type = 'submit'
+                onClick={(e) => handleSubmit(e)}
+                >
+                <Lupa fill='#dd5d26'/>
+                </button>
             
+            </div>
 
-        <br></br>
-
-            <input
-            type = 'text'
-            placeholder="Buscar..."    
-            onChange={(e) => handleInputChange(e)} 
-            />
-            <button
-            type = 'submit'
-            onClick={(e) => handleSubmit(e)}
-            >
-            BUSCAR
-            </button>
-
-        <br></br>
-
-            <Link to='/CreateRecipe'>
-                <button> CREAR RECETA </button>
-            </Link>
+            <div className="NAV-CREATE">
+                <Link to='/CreateRecipe'>
+                    <CreateRecipe fill={'#dd5d26'}/>               
+                </Link>
+            </div>
 
         </div>
 

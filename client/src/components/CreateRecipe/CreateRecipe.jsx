@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import './CreateRecipe.css'
 import { useHistory } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
+import RecipeName from '../diet-icons/icons/RecipeName'
 
 
 
@@ -36,9 +37,8 @@ export default function CreateRecipe() {
     let dispatch = useDispatch();
     let history = useHistory();
     
+  
     const dietsfetched = useSelector(state => state.diets)
-    
-    
     const [errors, setErrors] = useState({})
     const [instructionList, setInstructionList] = useState([
         {Step: ''},
@@ -59,7 +59,7 @@ export default function CreateRecipe() {
 
     useEffect(() => {
         dispatch(fetchDiets());
-        dispatch(fetchRecipes());
+        // dispatch(fetchRecipes());
     }, [])
     
     function handleChange(e) {
@@ -92,7 +92,7 @@ export default function CreateRecipe() {
     
     // Funcion para agregar y eliminar instruccioens
     function handleInstruction() {
-        setInstructionList([...instructionList, {step: ''}])
+        setInstructionList([...instructionList, {Step: ''}])
     }
     function handleRemove (index) {
         const list = [...instructionList];
@@ -142,141 +142,153 @@ export default function CreateRecipe() {
         setIngredientsList(list);
     }
 
+  
 
     return (
-        <div>    
+        <div className="FORM">    
           
              <NavBar></NavBar>
-    
-            <h1>CREAR RECETA</h1>
+     
             <div className='form-general'>
-                <form onSubmit={(e) => handleSubmit(e)}>
-                        <label>Name: </label>
-                    <div>
-                        <input
-                        type='text'
-                        value={input.name}
-                        name='name'
-                        onChange={(e) => handleChange(e)}
-                        placeholder='Name...'
-                        className={errors.name && 'danger'}
-                        />
-                        {errors.name && (
-                            <p className="error">{errors.name}</p>
-                        )}
+                <RecipeName width={200} height={200} className='ICON-RECIPE'/>
+                <div className="RECIPE-ICON">
+                </div>
+                <form onSubmit={(e) => handleSubmit(e)} className='FORMULARY'>
+                       
+                    <div className="FORM-NAME">
+                        
+                        <div className={errors.name && 'danger'}>
+                            <input
+                            type='text'
+                            value={input.name}
+                            name='name'
+                            onChange={(e) => handleChange(e)}
+                            placeholder='Name...'
+                            className= 'FORM-INPUT'
+                            />
+                            {errors.name && (
+                                <p className="error">{errors.name}</p>
+                            )}
+                        </div>
                     </div> 
-                        <label>Resume: </label>
-                    <div>
-                        <input
+                         <label>Resume: </label>
+                    <div className={errors.resume && 'danger'}>
+                        <textarea
                         type='text'
                         value={input.resume}
                         name='resume'
                         onChange={(e) => handleChange(e)}
-                        placeholder='Resume...'
-                        className={errors.resume && 'danger'}
+                        placeholder='...'
+                        className='FORM-RESUME'
                         />
                          {errors.resume && (
                             <p className="error">{errors.resume}</p>
                         )}
                     </div>     
-                        <label>HealthScore: </label>
-                    <div>
-                        <input
-                        type='text'
-                        value={input.health_score}
-                        name='health_score'
-                        onChange={(e) => handleChange(e)}
-                        className={ (errors.HealthscoreNotNum || errors.HealthscoreMaxMin || errors.HealthscoreNull) && 'danger'}
-                        />
-                         {errors.HealthscoreMaxMin && (
-                            <p className="error">{errors.HealthscoreMaxMin}</p>
-                        )}
-                        {errors.HealthscoreNotNum && (
-                            <p className="error">{errors.HealthscoreNotNum}</p>
-                        )}
-                        {errors.HealthscoreNull && (
-                            <p className="error">{errors.HealthscoreNull}</p>
-                        )}
-                    </div>     
 
                     <div className="INGREDIENTS-INSTRUCCIONS">
 
-                        <div className="INSTRUCCIONS">
+                        <div className="FORM-INSTRUCCIONS">
                             <span>Instruction(s):</span>
                                 {instructionList.map((singleInstruction, index) => {
                                     return (
-                                        <div key = {index} className='INSTRUCTIONS'>
-                                            <div>
-                                                <span>Step {index + 1} : </span>
-                                                <input name='step' onChange={(e) => handleInstructionChange(e, index) } value={singleInstruction.step}  ></input>
+                                        <div key = {index} >
+                                            <div className='INSTRUCTIONS'>
+                                                <span>Step {index + 1} :</span>
+                                                <input className="INPUT-STEPS" name='Step' onChange={(e) => handleInstructionChange(e, index) } value={singleInstruction.Step}  ></input>
+                                            <div className="INSTRUCTIONS-BTNS">
                                                 {instructionList.length - 1 === index && instructionList.length < 4 && 
                                                 <button type='button' className="add-btn" onClick={() => handleInstruction()}>Add</button>
                                                 }
-                                            </div>
-                                            <div>
                                                 {instructionList.length > 1 && 
-                                                <button className="rmv-btn" type='button' onClick={(e) => handleRemove(index)}> Remove </button>
+                                                <button className="rmv-btn" type='button' onClick={(e) => handleRemove(index)}> Rmv </button>
                                                 }
+                                            </div>
                                             </div>
                                         </div>
                                     )
                                 })}
                         </div>
 
-                        <div className="INGREDIENTS">
+                        <div className="FORM-INGREDIENTS">
                             <span>Ingredients :</span>
                                 {ingredientList.map((singleIngredient, index) => {
                                     return (
-                                        <div key = {index} className='INSTRUCTIONS'>
-                                            <div>
-                                                <span>Ingredient : </span>
-                                                <input name='Ingredient' onChange={(e) => handleIngredientChange(e, index) } value={singleIngredient.step}  ></input>
+                                        <div key = {index} >
+                                            <div className='INSTRUCTIONS'>
+                                                <input className="INPUT-STEPS" name='Ingredient' onChange={(e) => handleIngredientChange(e, index) } value={singleIngredient.Ingredient}  ></input>
+                                            <div className="INSTRUCTIONS-BTNS">
                                                 {ingredientList.length - 1 === index && ingredientList.length < 4 && 
                                                 <button type='button' className="add-btn" onClick={() => handleIngredient()}>Add</button>
                                                 }
-                                            </div>
-                                            <div>
                                                 {ingredientList.length > 1 && 
-                                                <button className="rmv-btn" type='button' onClick={(e) => handleRemoveIngredient(index)}> Remove </button>
+                                                <button className="rmv-btn" type='button' onClick={(e) => handleRemoveIngredient(index)}> Rmv </button>
                                                 }
+                                            </div>
                                             </div>
                                         </div>
                                     )
                                 })}
                         </div>
                     </div>
-                    <div>
-                        <label>Imagen: </label>
-                        <input
-                        type='text'
-                        value={input.image}
-                        name='image'
-                        onChange={(e) => handleChange(e)}
-                        placeholder='put image..'
-                        />
-                    </div>    
+                    <div className="FORM-IMG-HS">
+                        <div className="FORM-IMG">
+                            <span>Image  :   </span>
+                            <input
+                            type='text'
+                            value={input.image}
+                            name='image'
+                            onChange={(e) => handleChange(e)}
+                            placeholder='put image..'
+                            />
+                        </div>    
+                        <div className={ (errors.HealthscoreNotNum || errors.HealthscoreMaxMin || errors.HealthscoreNull) && 'danger' && 'DANGER'}>
+                            <label>HealthScore: </label>
+                            <input
+                            type='text'
+                            value={input.health_score}
+                            name='health_score'
+                            onChange={(e) => handleChange(e)}
+                            className= 'INPUT-HS'
+                            />
+                            {errors.HealthscoreMaxMin && (
+                                <p className="error">{errors.HealthscoreMaxMin}</p>
+                            )}
+                            {errors.HealthscoreNotNum && (
+                                <p className="error">{errors.HealthscoreNotNum}</p>
+                            )}
+                            {errors.HealthscoreNull && (
+                                <p className="error">{errors.HealthscoreNull}</p>
+                            )}
+                        </div>   
+                    </div>
 
-                    <div className="diets">
-                        <label> Select Diets </label>
+
+                        <label> Select Diets </label>                           
+                    <div className="FORM-DIETS">
                         {dietsfetched.map((diets) => {
 
                                 return (                               
-                                <label key= {diets.id} ><br></br><input
+                                <label key= {diets.id} className='FORM-DIET-LABEL'><br></br><input
                                 type='checkbox'
                                 name='diets'
                                 value={diets.id}
                                 onChange={handleCheck}
-                                ></input>{diets.name}</label>
-                                
-                                )
-                            
+                                ></input>{diets.name}</label>                     
+                                )     
                             })
                         }                 
                     </div>   
                     <br></br> 
-                    <button type='submit'> CREAR RECETA </button> 
+                
+                    <button type='submit' className="SUBMIT-RECIPE"> CREAR RECETA </button> 
+                    
                 </form>
+           
+           
             </div>
+
+
 
         </div>
     )

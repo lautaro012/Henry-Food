@@ -1,15 +1,32 @@
+.background {
+    background: url('../diet-icons/DETAILSWALLPAPER.jpg');
+}
+
+.LIST-OF-INGREDIENTS {
+    background: #ffffff0a;
+    backdrop-filter: blur(4px);
+}
+
 .INGREDIENTS-RECIPE-EMPTY {
     display: flex;
     padding-top: 40px;
     flex-direction: row;
+    color: black;
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: bolder;
+    text-shadow: 2px 2px 8px #0000007f;
+    min-height: 1000px;
 }
 
 .INGREDIENTS {
     position: -webkit-sticky; /* Safari & IE */
     position: sticky;
     top: 0;
-    padding-top: 40px;
+    padding-top: 65px;
+    text-transform: uppercase;
 }
+
 
 .INGREDIENTS-CONTEINER {
     width: 20%;
@@ -50,6 +67,10 @@
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-shadow: 2px 2px 8px #dd5d26;
+    font-size: 3.5rem;
 }
     
 .NAME{
@@ -57,8 +78,24 @@
     align-items: center;
     justify-content: center;
     align-content: center;
+    text-transform: uppercase;
+    font-style: italic;
+    font-weight: bolder;
+    text-shadow: 2px 2px 8px #ffffffbd;
 }
 
+.SHOW-RESUME {
+    text-transform: none;
+    text-shadow: 2px 2px 8px #ffffffbd;
+}
+
+.STEPS-WRITED {
+    text-transform: none;
+    text-shadow: 2px 2px 8px #ffffffbd;
+    background: #ffffff0a;
+    backdrop-filter: blur(4px);
+    border-radius: 3px;
+}
 
 .SHOW-DIETS{
     display: flex;
@@ -76,5 +113,9 @@
     display: flex;
     width: 50%;
     flex-direction: column;
+}
+
+.INGREDIENTS-LIST {
+    list-style-type:none;
 }
 

@@ -29,7 +29,7 @@ router.get('/', async (req , res, next) => {
                  
             })
             // Lo busco en la API
-            let recipesFromApi= await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&addRecipeInformation=true&number=100`)
+            let recipesFromApi= await axios.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${YOUR_API_KEY}&addRecipeInformation=true&number=9`)
                 .then(resp => resp.data)
 
             let filteredRecipesApi = [];

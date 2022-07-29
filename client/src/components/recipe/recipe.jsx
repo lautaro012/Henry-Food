@@ -1,7 +1,7 @@
 import './recipe.css';
 import { Link } from 'react-router-dom'
 import * as icons from '../diet-icons/DietIcons'
-import HeartIcon from '../diet-icons/icons/icons';
+import Heart from '../diet-icons/icons/Heart';
 
 export default function Recipe(params) {
 
@@ -20,22 +20,22 @@ export default function Recipe(params) {
         whole30: icons.Whole
     }
 
-    let dietIcons = diets.map(diet => components[diet.replace(/\s+/g, '')])
+    let dietIcons = diets?.map(diet => components[diet.replace(/\s+/g, '')])
 
 
     return (
              <Link to= {`/Recipe/${id}`} className='Link' >
-            <div className= "card" key={id} > 
+        <div className= "card" key={id} > 
                 <div className='IMG-CARD'>
                 <img src= {image} alt='imagen' className='image'/>
                 </div> 
                 <div className='CONTEINER-AL-LADO-DE-LA-IMAGEN'>
                     <div className='NOMBRE-Y-DETALLES'>
                         <div className='HS-ICONS'>    
-                            <HeartIcon width={65} height={65} fill={'#dd5d26'} className='HEART-ICON'/>
                             <p className='HS-TEXT'>
                                 {health_score} 
                             </p>    
+                            <Heart width={65} height={65} fill={'#dd5d26'} className='HEART-ICON'/>
                         
                         </div>
                         <div className='SCORE_Y_DIETS'>
