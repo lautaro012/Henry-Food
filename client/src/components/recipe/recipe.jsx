@@ -4,7 +4,6 @@ import * as icons from '../diet-icons/DietIcons'
 import Heart from '../diet-icons/icons/Heart';
 
 export default function Recipe(params) {
-
     let { name , image, id, health_score, diets, resume } = params.recipe
     
     const components = {

@@ -16,16 +16,14 @@ const {
 
 
 export default function RecipeDetails(props) {
-    console.log(process.env)   
-    console.log(REACT_APP_API) 
 
 
     const id = props.match.params.id
     
     let recipeDetails = useSelector(state => state.recipeDetails)
-    console.log(recipeDetails)
+    
     let dispatch = useDispatch()
-    console.log(recipeDetails)
+    
     useEffect(() => {
         dispatch(fetchRecipeDetail(id))
     }, [dispatch, id])

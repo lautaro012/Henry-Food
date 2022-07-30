@@ -117,12 +117,13 @@ export default function CreateRecipe() {
         setInput({
             name: '',
             resume: '',
-            health_score: 0,
+            health_score: 1,
             step_by_step: {},
             diets: [],
             image: '',
             extendedIngredients: {}
         })
+        console.log('EL INPUT ES:', input)
     }
 
     function handleIngredient() {
@@ -245,7 +246,7 @@ export default function CreateRecipe() {
                         <div className={ (errors.HealthscoreNotNum || errors.HealthscoreMaxMin || errors.HealthscoreNull) && 'danger' && 'DANGER'}>
                             <label>HealthScore: </label>
                             <input
-                            type='text'
+                            type='number'
                             value={input.health_score}
                             name='health_score'
                             onChange={(e) => handleChange(e)}
@@ -288,7 +289,7 @@ export default function CreateRecipe() {
            
             </div>
 
-
+   
 
         </div>
     )

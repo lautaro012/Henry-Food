@@ -20,7 +20,7 @@ export function fetchRecipes(name) {
         return function(dispatch) {
             // fetch('http://localhost:3001/api/Recipe?name=' + name)
 
-            fetch(`${REACT_APP_API}/api/Recipe?name='` + name)
+            fetch(`${REACT_APP_API}/api/Recipe?name=`+name)
             .then(resp => resp.json())
             .then(recipes => {
                 dispatch({
@@ -43,7 +43,7 @@ export function fetchRecipes(name) {
                 })
             })
             .catch(error => {
-                console.log(REACT_APP_API)
+                
                 console.log(error)
             })
             

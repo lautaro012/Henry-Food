@@ -15,21 +15,7 @@ const initialState = {
     Allrecipes: [],
     diets: [],
     recipeDetails: {},
-    dish: [
-        'lunch',
-        'main course',
-        'main dish',
-        'dinner',
-        'side dish',
-        'salad',
-        'morning meal',
-        'breakfast',
-        'brunch',
-        'soup',
-        'condiment',
-        'dip',
-        'spread'
-    ]
+
 }
 
 

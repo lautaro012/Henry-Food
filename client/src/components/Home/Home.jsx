@@ -17,7 +17,6 @@ export default function Home() {
      //statetoprops
     let recipes = useSelector(state => state.recipes)
     let diets = useSelector(state => state.diets)
-    let dish = useSelector(state => state.dish)
     let Allrecipes = useSelector(state => state.Allrecipes)
 
     //Paginado
@@ -31,7 +30,6 @@ export default function Home() {
 
     const [render, setRender] = useState('')
     var dietsToFilter = []
-    var dishToFilter = []
 
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
@@ -41,7 +39,6 @@ export default function Home() {
         if(e.target.checked){
             dietsToFilter.push(e.target.value)
         } 
-        console.log(dietsToFilter)
         if(!e.target.checked) {
             dietsToFilter = dietsToFilter.filter(diet => diet !== e.targe.value)
         }
@@ -65,22 +62,6 @@ export default function Home() {
         dispatch(order({orderBy : orderBy, orderType: orderType}));
         setCurrentPage(1);
         setRender(`${render} renderizado`);
-    }
-
-    function handleCheckDish(e) {
-        if(e.target.checked){
-            dishToFilter.push(e.target.value)
-        } 
-        if(!e.target.checked) {
-            dishToFilter = dishToFilter.filter(dish => dish !== e.target.value)
-        }
-
-        filteredByDish(dishToFilter)
-    }
-    
-    function filteredByDish(diets) {
-        dispatch(filterByDish(diets));
-        setCurrentPage(1);
     }
 
     //dispatchtoprops
@@ -139,7 +120,7 @@ export default function Home() {
                                     </details >
                                 </div>
 
-                                <button onClick={(e) => handleMyRecipes(e)}>
+                                <button className='SUBMIT-RECIPE' onClick={(e) => handleMyRecipes(e)}>
                                     MIS RECETAS
                                 </button>
                             </div>
@@ -162,29 +143,25 @@ export default function Home() {
                                                 key={recipe.id}
                                                 />
                                     }) 
-                                }    
+                                }       
+                                 { !currentRecipes.length < 5 ?
+                                        <Paginado
+                                        recipesPerPage = {recipesPerPage}
+                                        allRecipes = {recipes.length}
+                                        paginado = {paginado}
+                                        /> :
+                                        null
+                                    }    
                             </div> 
                             :
                             <div className='NOT-FOUND-ICON'>
                                  <NotFound></NotFound>
                                 NO SE ENCONTRARON RECETAS
-                                <button onClick={refresh}>VOLVER A INTENTAR</button>
+                                <button className='SUBMIT-RECIPE' onClick={refresh}>VOLVER A INTENTAR</button>
                              </div>
                         }                           
                         </div>
-
-
-            
-
-
-                    { !currentRecipes.length < 5 ?
-                        <Paginado
-                        recipesPerPage = {recipesPerPage}
-                        allRecipes = {recipes.length}
-                        paginado = {paginado}
-                        /> :
-                        null
-                    }    
+ 
  
                     { recipes.length ?
                         <div className='favs'>
