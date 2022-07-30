@@ -156,13 +156,6 @@ export const filterRecipeByCheap = function(payload) {
     }
   }
 
-  export const filterByDish = function(payload) {
-    return {
-        type: FILTER_BY_DISH,
-        payload
-    }
-  }
-
   export const filterCreated = function(payload) {
     return {
         type: FILTER_CREATED,

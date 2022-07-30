@@ -27,6 +27,7 @@ export default function Home() {
 
     //recetas filtradas por pagina
     const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
+    console.log(currentRecipes)
 
     const [render, setRender] = useState('')
     var dietsToFilter = []
@@ -144,7 +145,7 @@ export default function Home() {
                                                 />
                                     }) 
                                 }       
-                                 { !currentRecipes.length < 5 ?
+                                 { !currentRecipes.length < 8 ?
                                         <Paginado
                                         recipesPerPage = {recipesPerPage}
                                         allRecipes = {recipes.length}

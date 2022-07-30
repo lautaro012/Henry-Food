@@ -116,7 +116,7 @@ router.get('/', async (req , res, next) => {
                     name: recipe.dataValues.name,
                     id: recipe.dataValues.id,
                     resume: recipe.dataValues.resume,
-                    health_score: recipe.dataValues.healthScore,
+                    health_score: recipe.dataValues.health_score,
                     image: recipe.dataValues.image,
                     cheap: recipe.dataValues.cheap,
                     veryPopular: recipe.dataValues.veryPopular,

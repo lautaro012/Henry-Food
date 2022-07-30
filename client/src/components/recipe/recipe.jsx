@@ -20,7 +20,7 @@ export default function Recipe(params) {
     }
 
     let dietIcons = diets?.map(diet => components[diet.replace(/\s+/g, '')])
-
+    let count = 0
 
     return (
              <Link to= {`/Recipe/${id}`} className='Link' >
@@ -45,7 +45,7 @@ export default function Recipe(params) {
                                 </div>
                                 <div className='DIETS-ICONS'>
                                     {dietIcons?.map(Icon => {
-                                        return <Icon width={38} height={38} fill={"#dd5d26"} className='diet-icon'/>
+                                        return <Icon key={count++} width={38} height={38} fill={"#dd5d26"} className='diet-icon'/>
                                     })}    
                                 </div>                            
                         </div>

@@ -282,7 +282,10 @@ export default function CreateRecipe() {
                     </div>   
                     <br></br> 
                 
-                    <button type='submit' className="SUBMIT-RECIPE"> CREAR RECETA </button> 
+                    { !Object.keys(errors).length ? 
+                    <button type='submit'   className='SUBMIT-RECIPE'> CREAR RECETA </button> : 
+                    <button type='submit'   className='SUBMIT-RECIPE-ERROR' disabled > CREAR RECETA </button> 
+                    }
                     
                 </form>
            

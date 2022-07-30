@@ -52,7 +52,8 @@ export default function reducer(state = initialState, action) {
         case CREATE_RECIPE:
             return {
                 ...state,
-                recipes: [...state.recipes, action.payload]
+                recipes: [...state.recipes, action.payload],
+                Allrecipes: [...state.Allrecipes, action.payload]
             }
 
         case FILTER_BY_DIET:
@@ -73,22 +74,6 @@ export default function reducer(state = initialState, action) {
                 recipes: statusFiltered
             }
 
-        case FILTER_BY_DISH:
-            const allrecipes2 = state.Allrecipes
-            const specificDish = action.payload
-            const dishfiltered = specificDish == 0 ? allrecipes2 : state.recipes.filter(recipe => {
-                for (let i = 0; i < specificDish.length; i++) {      
-                    if(recipe.dishTypes.includes(specificDish[i].toLowerCase()) || recipe.dishTypes.includes(specificDish[i])) {
-                        return recipe
-                    }
-                }
-                return console.log('Receta filtrada con exito por tipos')
-            }) 
-            return {
-                ...state,
-                recipes: dishfiltered
-            }
-
         case FILTER_CREATED:
             
             //FILTRA MIS RECETAS SOBRE EL FILTRO DE DIETA. NO SOBRE EL DE TODAS LAS RECETAS
@@ -103,15 +88,6 @@ export default function reducer(state = initialState, action) {
                 recipes: myRecipes
             }
 
-        case FILTER_BY_CHEAP:
-
-            if(action.payload) {
-                state.recipes = state.recipes.filter(recipe =>  recipe.cheap === action.payload )
-            }
-        
-            return {
-                ...state,
-            }
 
         case ORDER:
             const orderType = action.payload.orderType

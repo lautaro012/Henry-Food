@@ -1,3 +1,41 @@
-Landing {
+.Landing {
     border: solid black;
+    background-image: url('../diet-icons/LANDING\ WALLPAPER2.jpg');
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+@import url(//db.onlinewebfonts.com/c/474c729bb9f706dac41385247d5dbc7c?family=Culinary);
+
+@font-face {font-family: "Culinary"; src: url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.eot"); src: url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.woff") format("woff"), url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.svg#Culinary") format("svg"); }
+
+
+.START {
+    width: 450px;
+    font-size: 100px;
+    border: none;
+    background: #ffffff6e;
+    border-radius: 40px;
+    backdrop-filter: blur(1px);
+    font-family: 'Culinary';
+    transition-duration: 0.4s;
+}
+
+
+.GREETINGS {
+    position: absolute;
+    right: 15%;
+}
+
+
+.START:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+  }
+  
+

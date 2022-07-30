@@ -2,9 +2,11 @@
 .conteiner-general {
   width: 100%;
   height: 100%;
-  background-image: url("../diet-icons/WALLPAPER.jpg");
+  background: url('../diet-icons/DETAILSWALLPAPERHOME.jpg');
   z-index: -1;
   background-size: contain;
+  background-repeat: none
+  ;
 }
 
 .favs {
