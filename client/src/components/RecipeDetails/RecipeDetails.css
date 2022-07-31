@@ -7,6 +7,16 @@
     backdrop-filter: blur(4px);
 }
 
+.DIETS-DISH {
+    display: flex;
+    height: 50%;
+    flex-direction: column;
+}
+.LIST-ING {
+    padding-bottom: 1rem;
+    list-style-type: circle;
+}
+
 .INGREDIENTS-RECIPE-EMPTY {
     display: flex;
     padding-top: 40px;
@@ -95,8 +105,17 @@
     background: #ffffff0a;
     backdrop-filter: blur(4px);
     border-radius: 3px;
+    overflow-wrap: anywhere;
 }
 
+.SHOW-DISH {
+    display: flex;
+    position: relative;
+    justify-content: space-around;
+}
+.SPAN-DISH {
+    background: #ffffff30;
+}
 .SHOW-DIETS{
     display: flex;
     height: 50%;

@@ -248,8 +248,16 @@ router.post('/:idRecipe/diet/:idDiet', async (req, res, next) => {
 })
 
 
-router.delete('/',(req, res) => {
-    
+router.delete('/:idRecipe', (req, res, next) => {
+    try {
+        const { idRecipe } = req.params
+        Recipe.destroy({ where: {id: idRecipe} })
+        .then(recipe => console.log(recipe))
+        res.send('Deleted ' + idRecipe)
+        
+    } catch(error) {
+        next(error) 
+    }
 })
 
 module.exports = router;

@@ -12,9 +12,18 @@
 .favs {
     display: flex;
     flex-direction: row;
-    overflow-x: scroll;
+    max-width: 60%;
+    animation: slide 15s linear infinite;
 }
 
+@keyframes slide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-1500px, 0, 0); /* The image width */
+  }
+}
 .CONTEINER-NAV {
     position: fixed;
     top: 0;
@@ -28,7 +37,7 @@
     justify-content: space-around;
     padding-left: 10%;
     padding-right: 10%;
-    padding-top: 7%;
+    padding-top: 5%;
 
 }
 .FILTERS {
@@ -45,9 +54,11 @@
   border: solid 2px #dd5d26bd;
   background: #ffffff7f;
   backdrop-filter: blur(2px);
-  max-width: 250px;
-  max-height: 380px;
   border-radius: 2px;
+  top: 5rem;
+  left: 8%;
+  right: 70%;
+  padding: 0.5rem;
 }
 
 
@@ -139,19 +150,12 @@
 
     .NOT-FOUND-ICON {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #ffffff7F;
-      backdrop-filter: blur(1px);
-
+      flex-direction: column;
     }
 
     .POPULARS {
-      color: #dd5d26;
-      display: flex;
-      align-items: center;
-      font-weight: bold;
-      text-transform: uppercase;
+      position: absolute;
+      right: 40%;
       font-style: italic;
       font-weight: bolder;
       text-shadow: 2px 2px 8px #dd5d26bd;
@@ -162,6 +166,8 @@
      font-style: italic;
      font-weight: bolder;
      text-shadow: 2px 2px 8px #dd5d26bd;
+     display: flex;
+     flex-wrap: wrap;
     }
 
 .SUMMARY-RECIPES {
@@ -186,6 +192,7 @@
   text-shadow: 2px 2px 8px #dd5d26bd;
   display: flex;
   flex-direction: column;
+  padding: .5rem;
 }
 
 .SELECT-ORDER {
@@ -194,3 +201,59 @@
   border: none;
   border-bottom: 2px solid #000000bd;
 }
+
+.MY-RECIPE {
+  align-items: center;
+  background-clip: padding-box;
+  background-color: #fa6400;
+  border: 1px solid transparent;
+  border-radius: .25rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  line-height: 1.25;
+  margin: 0;
+  min-height: 3rem;
+  padding: calc(.875rem - 1px) calc(1.5rem - 1px);
+  position: relative;
+  text-decoration: none;
+  transition: all 250ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  width: auto;
+}
+
+.MY-RECIPE:hover,
+.MY-RECIPE:focus {
+  background-color: #fb8332;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px;
+}
+
+.MY-RECIPE:hover {
+  transform: translateY(-1px);
+}
+
+.MY-RECIPE:active {
+  background-color: #c85000;
+  box-shadow: rgba(0, 0, 0, .06) 0 2px 4px;
+  transform: translateY(0);
+}
+
+.LABEL-DIET {
+
+}
+
+.CARROUSEL {
+  display: flex;
+  overflow: hidden;
+  width: 65%;
+}
+

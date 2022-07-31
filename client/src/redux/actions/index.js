@@ -9,6 +9,7 @@ export const FETCH_DETAILS = 'FETCH_DETAILS'
 export const ORDER = 'ORDER'
 export const FILTER_BY_CHEAP = 'FILTER_BY_CHEAP'
 export const FILTER_BY_DISH = 'FILTER_BY_DISH'
+export const CLEAR = 'CLEAR'
 require('dotenv').config();
 const {
   REACT_APP_API
@@ -170,3 +171,24 @@ export const filterRecipeByCheap = function(payload) {
     }
   }
 
+export const deleteRecipe = function(payload) {
+    return async function(dispatch) {
+        console.log('Llego al action')
+        await fetch(`http://localhost:3001/api/recipe/${payload}`, {
+            method: 'DELETE'
+        })
+        dispatch({
+            type: DELETE_RECIPE, 
+            payload
+        })
+    }
+}
+
+
+
+
+export const clear = function(payload) {
+    return {
+        type: CLEAR
+    }
+}

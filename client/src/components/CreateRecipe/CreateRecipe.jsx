@@ -181,6 +181,8 @@ export default function CreateRecipe() {
                         onChange={(e) => handleChange(e)}
                         placeholder='...'
                         className='FORM-RESUME'
+                        required rows='5' 
+                        cols='40'
                         />
                          {errors.resume && (
                             <p className="error">{errors.resume}</p>

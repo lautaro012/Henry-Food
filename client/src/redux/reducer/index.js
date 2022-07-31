@@ -2,11 +2,14 @@ import { CREATE_RECIPE, FETCH_DETAILS,
         FETCH_DIET, 
         FETCH_RECIPE, 
         FETCH_RECIPE_NAME, 
-        FILTER_BY_CHEAP, 
+        // FILTER_BY_CHEAP, 
         FILTER_BY_DIET, 
         FILTER_CREATED, 
         ORDER,
-        FILTER_BY_DISH
+        // FILTER_BY_DISH,
+        CLEAR,
+        DELETE_RECIPE
+
         } from "../actions";
 
 
@@ -53,7 +56,7 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 recipes: [...state.recipes, action.payload],
-                Allrecipes: [...state.Allrecipes, action.payload]
+                // Allrecipes: [...state.Allrecipes, action.payload]
             }
 
         case FILTER_BY_DIET:
@@ -111,11 +114,26 @@ export default function reducer(state = initialState, action) {
                         }
                         return 0
                     })
-
+                    
+                    return {
+                        ...state,
+                        recipes: sortedRecipes
+                    }
+                    
+        case CLEAR:
             return {
                 ...state,
-                recipes: sortedRecipes
+                recipeDetails: {}
             }
+
+        case DELETE_RECIPE:
+            let filterRecipe= state.recipes.filter(recipe => recipe.id === action.payload)
+            
+            return {
+                ...state,
+                recipes: filterRecipe
+            }
+
 
         default:
             return state;

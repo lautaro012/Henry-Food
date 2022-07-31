@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRecipes, fetchDiets, filteredRecipeByDiet, order, filterCreated, filterByDish  } from '../../redux/actions/index';
+import { fetchRecipes, fetchDiets, filteredRecipeByDiet, order, filterCreated  } from '../../redux/actions/index';
 import Recipe from '../recipe/recipe';
 import Paginado from '../Paginado/Paginado';
 import NavBar from '../NavBar/NavBar';
@@ -27,7 +27,7 @@ export default function Home() {
 
     //recetas filtradas por pagina
     const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
-    console.log(currentRecipes)
+    console.log('LAS RECETAS DE LA PAGINA SON:', currentRecipes)
 
     const [render, setRender] = useState('')
     var dietsToFilter = []
@@ -108,7 +108,7 @@ export default function Home() {
                                         
                                         {diets?.map((diets) => {
                                         return (
-                                            <label key= {diets.id} ><br></br><input
+                                            <label className='LABEL-DIET' key= {diets.id} ><br></br><input
                                             key= {diets.name}
                                             type='checkbox'
                                             name='diets'
@@ -121,64 +121,76 @@ export default function Home() {
                                     </details >
                                 </div>
 
-                                <button className='SUBMIT-RECIPE' onClick={(e) => handleMyRecipes(e)}>
+                                <button className='MY-RECIPE' onClick={(e) => handleMyRecipes(e)}>
                                     MIS RECETAS
                                 </button>
                             </div>
 
                         </div>
-                    
-                    
-                        {  !Allrecipes.length ?
-                            <div className='LOADING'>
-                                <span className="loader"></span> 
-                            </div>
-                            :
-                            recipes.length ?
-                            <div className='RECIPES-CONTEINER' >
-                                {/* 312 x 213 */}
-                                { 
-                                    currentRecipes.map((recipe) => {  
-                                        return <Recipe 
-                                                recipe={recipe}
-                                                key={recipe.id}
-                                                />
-                                    }) 
-                                }       
-                                 { !currentRecipes.length < 8 ?
-                                        <Paginado
-                                        recipesPerPage = {recipesPerPage}
-                                        allRecipes = {recipes.length}
-                                        paginado = {paginado}
-                                        /> :
+                        <div className='RECIPES-CONTEINER'> 
+                            {  !Allrecipes.length ?
+                                <div className='LOADING'>
+                                    <span className="loader"></span> 
+                                </div>
+                                :
+                                recipes.length ?
+                                <div className='RECIPES-CONTEINER' >
+
+                                    { !currentRecipes.length < 8 ?
+                                            <div className='PAGINADO'>
+                                                <Paginado
+                                                recipesPerPage = {recipesPerPage}
+                                                allRecipes = {recipes.length}
+                                                paginado = {paginado}
+                                                /> 
+                                            </div>
+                                        :
                                         null
-                                    }    
-                            </div> 
-                            :
-                            <div className='NOT-FOUND-ICON'>
-                                 <NotFound></NotFound>
-                                NO SE ENCONTRARON RECETAS
-                                <button className='SUBMIT-RECIPE' onClick={refresh}>VOLVER A INTENTAR</button>
-                             </div>
-                        }                           
-                        </div>
- 
- 
-                    { recipes.length ?
-                        <div className='favs'>
-                            <span className='POPULARS'> MOST POPULARS </span> 
-                            {recipes?.map(recipe => {
-                                if(recipe.veryPopular) {
-                                    return <Recipefav 
-                                            recipe={recipe}
-                                            key={recipe.id}/>
+                                        }    
+                                        {/* 312 x 213 */}
+                                    { 
+                                        currentRecipes.map((recipe) => {  
+                                            return (
+                                                        <Recipe 
+                                                        recipe={recipe}
+                                                        key={recipe.id}
+                                                        />
+                                                        
+                                                    )
+                                        }) 
+                                    }       
+                                </div> 
+                                :
+                                <div className='NOT-FOUND-ICON'>
+                                    <NotFound></NotFound>
+                                    <button className='SUBMIT-RECIPE' onClick={refresh}>VOLVER A INTENTAR</button>
+                                </div>
+                            } 
+                            
+                                <div className='CARROUSEL'>
+                                { recipes.length ?
+                                    <div className='favss'>
+                                        <span className='POPULARS'> MOST POPULARS </span> 
+                                        <div className='favs'>
+                                            {recipes?.map(recipe => {
+                                                if(recipe.veryPopular) {
+                                                    return (
+                                                            <Recipefav 
+                                                            recipe={recipe}
+                                                            key={recipe.id}/>
+                                                    )
+                                                }
+                                                
+                                            })}
+                                        </div>  
+                                    </div>
+                                    :        
+                                    null
                                 }
-                            })}
-                        </div>  
-                        :        
-                        null
-                    
-                    }
+                                </div>
+                        
+                        </div>
+                    </div>
             </div>
         </div>
 
