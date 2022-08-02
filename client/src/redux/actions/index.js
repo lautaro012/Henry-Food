@@ -10,6 +10,8 @@ export const ORDER = 'ORDER'
 export const FILTER_BY_CHEAP = 'FILTER_BY_CHEAP'
 export const FILTER_BY_DISH = 'FILTER_BY_DISH'
 export const CLEAR = 'CLEAR'
+export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
+export const REMOVE_FROM_FAVORTES = 'REMOVE_FROM_FAVORITES'
 require('dotenv').config();
 const {
   REACT_APP_API
@@ -21,7 +23,7 @@ export function fetchRecipes(name) {
         return function(dispatch) {
             // fetch('http://localhost:3001/api/Recipe?name=' + name)
 
-            fetch(`${REACT_APP_API}/api/Recipe?name=`+name)
+            fetch(`${REACT_APP_API}/api/Recipe?name=` + name )
             .then(resp => resp.json())
             .then(recipes => {
                 dispatch({
@@ -143,12 +145,12 @@ export const createRecipe = function(payload, history) {
   };
   
   
-export const filterRecipeByCheap = function(payload) {
-    return {
-        type: FILTER_BY_CHEAP,
-        payload
-    }
-}
+// export const filterRecipeByCheap = function(payload) {
+//     return {
+//         type: FILTER_BY_CHEAP,
+//         payload
+//     }
+// }
 
   export const filteredRecipeByDiet = function(payload) {
     return {
@@ -184,10 +186,21 @@ export const deleteRecipe = function(payload) {
     }
 }
 
+export const addToFavorites = function(payload) {
+    return {
+        type: ADD_TO_FAVORITES,
+        payload
+    }
+}
 
+export const removeFromFavorites = function(payload) {
+    return {
+        type: REMOVE_FROM_FAVORTES,
+        payload
+    }
+}
 
-
-export const clear = function(payload) {
+export const clear = function() {
     return {
         type: CLEAR
     }

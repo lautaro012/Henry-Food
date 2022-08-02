@@ -15,28 +15,26 @@ export default function NavBar() {
     const navigateTo = () => history.push('/home');
 
     const [name, setName] = useState('')
-     
     function handleInputChange(e) {
         e.preventDefault();
         setName(e.target.value);
     }
-
+    
     function handleSubmit(e) {
         e.preventDefault();
         dispatch(fetchRecipes(name))
         setName('')
     }
     
-
+    
 
 
     return (
         <div className='NAVBAR'>
-           
-
-                <button onClick={navigateTo} className='HOME-BTN'>
-                    <Home fill={'#dd5d26'}></Home>
-                </button>   
+            
+            <button onClick={navigateTo} className='HOME-BTN'>
+                <Home fill={'#dd5d26'}></Home>
+            </button>   
 
             <div className="NAV-SEARCH">
                 <input
@@ -51,8 +49,7 @@ export default function NavBar() {
                 onClick={(e) => handleSubmit(e)}
                 >
                 <Lupa fill='#dd5d26'/>
-                </button>
-            
+                </button>    
             </div>
 
             <div className="NAV-CREATE">

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createRecipe, fetchDiets, fetchRecipes } from "../../redux/actions";
+import { createRecipe, fetchDiets } from "../../redux/actions";
 import { useEffect } from "react";
 import './CreateRecipe.css'
 import { useHistory } from "react-router-dom";
@@ -60,7 +60,7 @@ export default function CreateRecipe() {
     useEffect(() => {
         dispatch(fetchDiets());
         // dispatch(fetchRecipes());
-    }, [])
+    }, [dispatch])
     
     function handleChange(e) {
         setInput({
@@ -285,8 +285,8 @@ export default function CreateRecipe() {
                     <br></br> 
                 
                     { !Object.keys(errors).length ? 
-                    <button type='submit'   className='SUBMIT-RECIPE'> CREAR RECETA </button> : 
-                    <button type='submit'   className='SUBMIT-RECIPE-ERROR' disabled > CREAR RECETA </button> 
+                        <button type='submit'   className='SUBMIT-RECIPE'> CREAR RECETA </button> : 
+                        <button type='submit'   className='SUBMIT-RECIPE-ERROR' disabled > CREAR RECETA </button> 
                     }
                     
                 </form>

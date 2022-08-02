@@ -2,7 +2,6 @@
 .conteiner-general {
   width: 100%;
   height: 100%;
-  background-color: navajowhite;
   z-index: -1;
   background-size: contain;
   background-repeat: none
@@ -177,7 +176,7 @@
 
 
 .SUMMARY-RECIPES::before{
-  content: '+';
+
   padding-right: 1rem;
 }
 
@@ -247,9 +246,7 @@
   transform: translateY(0);
 }
 
-.LABEL-DIET {
 
-}
 
 .CARROUSEL {
   display: flex;

@@ -11,31 +11,34 @@ import NotFound from '../diet-icons/icons/NotFound'
 
 
 export default function Home() {
-    
     let dispatch = useDispatch();
-        
-     //statetoprops
+    
+    //statetoprops
     let recipes = useSelector(state => state.recipes)
     let diets = useSelector(state => state.diets)
     let Allrecipes = useSelector(state => state.Allrecipes)
-
+    let favrecipes = useSelector(state => state.favorites)
+    let Myrecipes = useSelector(state => state.Myrecipes)
+    
+    
     //Paginado
     const [currentPage, setCurrentPage] = useState(1)
     const [recipesPerPage, setRecipesPerPage] = useState(9)
+    const [onlyfavs, setOnlyFavs] = useState(false)
+    const [onlyMy, setOnlyMy] = useState(false)
+    //recetas filtradas por pagina
     const indexOfLastRecipe = currentPage * recipesPerPage
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage
-
-    //recetas filtradas por pagina
     const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
-    console.log('LAS RECETAS DE LA PAGINA SON:', currentRecipes)
-
-    const [render, setRender] = useState('')
-    var dietsToFilter = []
-
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
     }
-
+    
+    const [render, setRender] = useState('')
+    
+    
+    
+    var dietsToFilter = []
     function handleCheck(e) {
         if(e.target.checked){
             dietsToFilter.push(e.target.value)
@@ -47,13 +50,9 @@ export default function Home() {
     }
 
     function filterbydiet(diets) {
-        dispatch(filteredRecipeByDiet(diets));
+        dispatch(filteredRecipeByDiet(diets, onlyMy, onlyfavs));
         setCurrentPage(1);
-    }
-
-    function handleMyRecipes(e) {
-        dispatch(filterCreated(e.target.value))
-        // console.log(e.target.value)
+        setRender(`${render} renderizado`);
     }
 
     function handleSort(e) {
@@ -64,18 +63,43 @@ export default function Home() {
         setCurrentPage(1);
         setRender(`${render} renderizado`);
     }
+  
+    function refresh(){
+        window.location.reload("Refresh")
+    }
 
+    function handleMyRecipes(e) {
+        if(!onlyMy) {
+            setOnlyMy(true)
+            setOnlyFavs(false)
+            dispatch(filterCreated())
+            setCurrentPage(1)
+        } else {
+            setOnlyMy(false);
+            setOnlyFavs(false);
+            setCurrentPage(1);
+        }
+    }
+
+    function handleFavorites() {
+        if(!onlyfavs) {
+            setOnlyFavs(true);
+            setOnlyMy(false)
+            setCurrentPage(1);
+        } else {
+            setOnlyFavs(false);
+            setOnlyMy(false)
+            setCurrentPage(1)
+        }
+    }
+    
     //dispatchtoprops
     useEffect(() => {
         dispatch(fetchDiets());
         dispatch(fetchRecipes());   
     }, [dispatch])          
 
-    function refresh(){
-        window.location.reload("Refresh")
-      }
-
-    return <div className='WHOLE-PAG'>
+return <div className='WHOLE-PAG'>
                 <div className='conteiner-general'>
 
                     <div className='CONTEINER-NAV'>
@@ -83,50 +107,95 @@ export default function Home() {
                     </div>
                     <div className='FILTERS_AND_RECIPES'>
                         <div className='FILTERS'>
-
-                            <div className='FIXED-FILTER'>
-
-                                <div className='FILTER-NAME'>
-                                <span> Search by : </span>
-                                </div>
+                            {
+                            !onlyMy && !onlyfavs ?
+                                <div className='FIXED-FILTER'>
+                                        <div className='FILTER-NAME'>
+                                        <span> Search by : </span>
+                                        </div>
+                                                
+                                        <div className='ORDER-RECIPES'>
+                                            <span> Name/Rate </span>
+                                            <select className='SELECT-ORDER' id='orderBy' onChange={(e) => handleSort(e)} defaultValue='orderBy'>
+                                                <option value= 'name'> Name </option>
+                                                <option value= 'health_score'> Rate </option>
+                                            </select>                                                             
+                                            <span>In What Order ?</span>
+                                            <select className='SELECT-ORDER' id='orderType' onChange={(e) => handleSort(e)} defaultValue='orderType'>
+                                                <option value= 'asc'> Ascendent </option>
+                                                <option value= 'des'> Descendent </option>
+                                            </select>
+                                        </div>  
+                                        <div>
+                                            <details className='DETAILS-RECIPES' open>
+                                                <summary className='SUMMARY-RECIPES'> Recipes: </summary>
+                                                
+                                                {diets?.map((diets) => {
+                                                    return (
+                                                        <label className='LABEL-DIET' key= {diets.id} ><br></br><input
+                                                        key= {diets.name}
+                                                        type='checkbox'
+                                                        name='diets'
+                                                        value={diets.name}
+                                                        disabled={dietsToFilter > 2 ? true : false}
+                                                        onClick={e => handleCheck(e)}
+                                                        ></input>{diets.name}</label>
+                                                    )
+                                                })}
+        
+                                            </details >
+                                        </div>
+                                        {
+                                            onlyMy ?
+                                            <button className='MY-RECIPE' onClick={(e) => handleMyRecipes(e)}>
+                                                All recipes
+                                            </button>
+                                            :
+                                            <button className='MY-RECIPE' onClick={(e) => handleMyRecipes(e)}>
+                                                My Recipes
+                                            </button>
+                                        }
                                         
-                                <div className='ORDER-RECIPES'>
-                                    <span> Name/Rate </span>
-                                    <select className='SELECT-ORDER' id='orderBy' onChange={(e) => handleSort(e)} defaultValue='orderBy'>
-                                        <option value= 'name'> Name </option>
-                                        <option value= 'health_score'> Rate </option>
-                                    </select>                                                             
-                                    <span>In What Order ?</span>
-                                    <select className='SELECT-ORDER' id='orderType' onChange={(e) => handleSort(e)} defaultValue='orderType'>
-                                        <option value= 'asc'> Ascendent </option>
-                                        <option value= 'des'> Descendent </option>
-                                    </select>
-                                </div>  
-                                <div>
-                                    <details className='DETAILS-RECIPES' open>
-                                        <summary className='SUMMARY-RECIPES'> Recipes: </summary>
-                                        
-                                        {diets?.map((diets) => {
-                                        return (
-                                            <label className='LABEL-DIET' key= {diets.id} ><br></br><input
-                                            key= {diets.name}
-                                            type='checkbox'
-                                            name='diets'
-                                            value={diets.name}
-                                            onClick={handleCheck}
-                                            ></input>{diets.name}</label>
-                                        )
-                                        })}
+                                        {
+                                            onlyfavs ?
+                                            <button className='MY-RECIPE' onClick={(e) => handleFavorites(e)}>
+                                                All recipes
+                                            </button>
+                                            :
+                                            <button className='MY-RECIPE' onClick={(e) => handleFavorites(e)}>
+                                                Favorites
+                                            </button>
+                                        }
 
-                                    </details >
                                 </div>
+                            :
+                                <div className='FIXED-FILTER'> 
+                                    {
+                                        onlyMy ?
+                                        <button className='MY-RECIPE' onClick={(e) => handleMyRecipes(e)}>
+                                            All recipes
+                                        </button>
+                                        :
+                                        <button className='MY-RECIPE' onClick={(e) => handleMyRecipes(e)}>
+                                            My Recipes
+                                        </button>
+                                    }
+                                        
+                                    {
+                                        onlyfavs ?
+                                        <button className='MY-RECIPE' onClick={(e) => handleFavorites(e)}>
+                                            All recipes
+                                        </button>
+                                        :
+                                        <button className='MY-RECIPE' onClick={(e) => handleFavorites(e)}>
+                                            Favorites
+                                        </button>
+                                    }     
+                                </div>
+                            }
 
-                                <button className='MY-RECIPE' onClick={(e) => handleMyRecipes(e)}>
-                                    MIS RECETAS
-                                </button>
                             </div>
 
-                        </div>
                         <div className='RECIPES-CONTEINER'> 
                             {  !Allrecipes.length ?
                                 <div className='LOADING'>
@@ -135,30 +204,68 @@ export default function Home() {
                                 :
                                 recipes.length ?
                                 <div className='RECIPES-CONTEINER' >
-
-                                    { !currentRecipes.length < 8 ?
-                                            <div className='PAGINADO'>
-                                                <Paginado
-                                                recipesPerPage = {recipesPerPage}
-                                                allRecipes = {recipes.length}
-                                                paginado = {paginado}
-                                                /> 
-                                            </div>
+                                    {
+                                        !onlyMy && !onlyfavs ?
+                                        <div className='PAGINADO'>
+                                            <Paginado
+                                            recipesPerPage = {recipesPerPage}
+                                            allRecipes = {recipes.length}
+                                            paginado = {paginado}
+                                            /> 
+                                        </div>
                                         :
                                         null
-                                        }    
-                                        {/* 312 x 213 */}
+                                    }
+
                                     { 
+                                        onlyfavs ?
+                                            favrecipes.length ?
+                                                favrecipes?.map((recipe) => {  
+                                                    return (
+                                                                <Recipe 
+                                                                recipe={recipe}
+                                                                key={recipe.id}
+                                                                favrecipes={favrecipes}
+                                                                />
+                                                                
+                                                            )
+                                                })
+                                                :
+                                                <div className='NOT-FOUND-ICON'>
+                                                    <NotFound></NotFound>
+                                                    <button className='SUBMIT-RECIPE' onClick={refresh}>VOLVER A INTENTAR</button>
+                                                 </div>
+                                        :
+                                        onlyMy ?
+                                            Myrecipes.length?
+                                                Myrecipes.map((recipe) => {  
+                                                    return (
+                                                                <Recipe 
+                                                                recipe={recipe}
+                                                                key={recipe.id}
+                                                                favrecipes={favrecipes}
+                                                                />
+                                                                
+                                                            )
+                                                })   
+                                                :
+                                                <div className='NOT-FOUND-ICON'>
+                                                    <NotFound></NotFound>
+                                                    <button className='SUBMIT-RECIPE' onClick={refresh}>VOLVER A INTENTAR</button>
+                                                </div>  
+                                        :
                                         currentRecipes.map((recipe) => {  
                                             return (
                                                         <Recipe 
                                                         recipe={recipe}
                                                         key={recipe.id}
+                                                        favrecipes={favrecipes}
                                                         />
                                                         
                                                     )
                                         }) 
-                                    }       
+
+                                    }    
                                 </div> 
                                 :
                                 <div className='NOT-FOUND-ICON'>
@@ -168,11 +275,15 @@ export default function Home() {
                             } 
                             
                                 <div className='CARROUSEL'>
-                                { recipes.length ?
+                                
                                     <div className='favss'>
-                                        <span className='POPULARS'> MOST POPULARS </span> 
+                                        {Allrecipes.length ?
+                                            <span className='POPULARS'> MOST POPULARS </span> 
+                                            :
+                                            null
+                                        }
                                         <div className='favs'>
-                                            {recipes?.map(recipe => {
+                                            {Allrecipes?.map(recipe => {
                                                 if(recipe.veryPopular) {
                                                     return (
                                                             <Recipefav 
@@ -184,9 +295,7 @@ export default function Home() {
                                             })}
                                         </div>  
                                     </div>
-                                    :        
-                                    null
-                                }
+
                                 </div>
                         
                         </div>

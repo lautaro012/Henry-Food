@@ -2,10 +2,14 @@ import './recipe.css';
 import { Link } from 'react-router-dom'
 import * as icons from '../diet-icons/DietIcons'
 import Heart from '../diet-icons/icons/Heart';
+import { useDispatch } from 'react-redux';
+import { addToFavorites, removeFromFavorites } from '../../redux/actions';
 
-export default function Recipe(params) {
-    let { name , image, id, health_score, diets, resume } = params.recipe
+export default function Recipe({ recipe, favrecipes}) {
+    let { name , image, id, health_score, diets, resume } = recipe
     
+    let dispatch = useDispatch()
+
     const components = {
         glutenfree: icons.Glutenfree,
         dairyfree: icons.Dairyfree,
@@ -22,9 +26,15 @@ export default function Recipe(params) {
     let dietIcons = diets?.map(diet => components[diet.replace(/\s+/g, '')])
     let count = 0
 
+    function handleFavourite(e) {
+        if(e.target.checked) dispatch(addToFavorites(e.target.value));
+        else dispatch(removeFromFavorites(e.target.value))
+    }
+
+
     return (
-             <Link to= {`/Recipe/${id}`} className='Link' >
         <div className= "card" key={id} > 
+             <Link to= {`/Recipe/${id}`} className='Link' >
                 <div className='IMG-CARD'>
                 <img src= {image} alt='imagen' className='image'/>
                 </div> 
@@ -56,7 +66,20 @@ export default function Recipe(params) {
                         </p>
                     </div>
                 </div>
-            </div>
                  </Link>
+                {
+                    favrecipes.includes(recipe) ?
+                    <div className="card-favourite">
+                        <input id={`hearth-${id}`} type="checkbox" value={name} onClick={(e) =>handleFavourite(e)} checked={true} className="favourite-checkbox"/>
+                        <label className="favourite-label" htmlFor={`hearth-${id}`}>❤</label>
+                    </div>
+                    :
+                    <div className="card-favourite">
+                        <input id={`hearth-${id}`} type="checkbox" value={name} onClick={(e) =>handleFavourite(e)} className="favourite-checkbox"/>
+                        <label className="favourite-label" htmlFor={`hearth-${id}`}>❤</label>
+                    </div>
+                }
+
+            </div> 
     )
 }

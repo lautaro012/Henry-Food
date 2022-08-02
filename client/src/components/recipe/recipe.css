@@ -26,7 +26,6 @@
     color: black;
     display: flex;
     margin: 2rem 1rem 2rem;
-    width: 87%;
     margin: 1rem;
     border-radius: 1rem;
 }
@@ -106,3 +105,31 @@
 .card:hover::after {
       opacity: 1;
  }
+
+ .card-favourite {
+    position: absolute;
+    right: 0;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px 14px 0px 1rem;
+    background-color: #ffffff7F;
+  }
+  
+  .favourite-checkbox {
+    display: none;
+  }
+  
+  .favourite-label {
+    font-size: 25px;
+    transition: 500ms;
+    cursor: pointer;
+  }
+  
+  .favourite-checkbox:checked + .favourite-label {
+    color: red;
+    transform: scale(1.2);
+  }
+  

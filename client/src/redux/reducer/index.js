@@ -8,7 +8,9 @@ import { CREATE_RECIPE, FETCH_DETAILS,
         ORDER,
         // FILTER_BY_DISH,
         CLEAR,
-        DELETE_RECIPE
+        DELETE_RECIPE,
+        ADD_TO_FAVORITES,
+        REMOVE_FROM_FAVORTES
 
         } from "../actions";
 
@@ -18,7 +20,8 @@ const initialState = {
     Allrecipes: [],
     diets: [],
     recipeDetails: {},
-
+    favorites: [],
+    Myrecipes: []
 }
 
 
@@ -60,36 +63,41 @@ export default function reducer(state = initialState, action) {
             }
 
         case FILTER_BY_DIET:
-
             // FILTRO POR DIETAS CON LOS VALUE
             const allrecipes = state.Allrecipes
             const specificDiet = action.payload
-            const statusFiltered = specificDiet == 0 ? allrecipes : state.recipes.filter(recipe => {
-                for (let i = 0; i < specificDiet.length; i++) {      
-                    if(recipe.diets.includes(specificDiet[i].toLowerCase()) || recipe.diets.includes(specificDiet[i])) {
-                        return recipe
+            let recipesToFilter= state.recipes
+                const statusFiltered = 
+                specificDiet.length === 0 ? 
+                allrecipes     
+                : 
+                recipesToFilter.filter(recipe => {
+                    for (let i = 0; i < specificDiet.length; i++) {      
+                        if(recipe.diets.includes(specificDiet[i].toLowerCase()) || recipe.diets.includes(specificDiet[i])) {
+                            return recipe
+                        }
                     }
+                    return console.log('Receta filtrada con exito')
+                }) 
+    
+                return {
+                    ...state,
+                    recipes: statusFiltered
                 }
-                return console.log('Receta filtrada con exito')
-            }) 
-            return {
-                ...state,
-                recipes: statusFiltered
-            }
-
+            
+          
         case FILTER_CREATED:
             
-            //FILTRA MIS RECETAS SOBRE EL FILTRO DE DIETA. NO SOBRE EL DE TODAS LAS RECETAS
-            const myRecipes = state.recipes.filter(recipe => {
-                if(typeof recipe.id === 'string') return recipe;
-                return console.log('Receta propia filtrada con exito')
-            }) 
-           
-
-            return {
-                ...state,
-                recipes: myRecipes
-            }
+            //FILTRA MIS RECETAS SOBRE EL FILTRO DE DIETA. NO SOBRE EL DE TODAS LAS RECETAS        
+                const myRecipes = state.recipes.filter(recipe => {
+                    if(typeof recipe.id === 'string') return recipe;
+                    return console.log('Receta propia filtrada con exito')
+                }) 
+                return {
+                    ...state,
+                    Myrecipes: myRecipes,
+                }
+            
 
 
         case ORDER:
@@ -128,10 +136,24 @@ export default function reducer(state = initialState, action) {
 
         case DELETE_RECIPE:
             let filterRecipe= state.recipes.filter(recipe => recipe.id === action.payload)
-            
             return {
                 ...state,
-                recipes: filterRecipe
+                Myrecipes: filterRecipe
+            }
+
+        case ADD_TO_FAVORITES:
+            const namerecipe = action.payload
+            let favoriteRecipes = state.recipes.filter(recipe => recipe.name === namerecipe )
+            return {
+                ...state,
+                favorites: [...state.favorites, ...favoriteRecipes],
+            }
+
+        case REMOVE_FROM_FAVORTES:
+            let filteredfavorite = state.favorites.filter(recipe => recipe.name !== action.payload)
+            return {
+                ...state,
+                favorites: filteredfavorite,
             }
 
 

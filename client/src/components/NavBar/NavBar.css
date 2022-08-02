@@ -5,6 +5,12 @@
     background-color: #000000bd;
     backdrop-filter: blur(1px);
 }
+.menu {
+    width: 35px;
+    height: 5px;
+    background-color: black;
+    margin: 6px 0;
+}
 
 .NAV-SEARCH {
     display: flex;
