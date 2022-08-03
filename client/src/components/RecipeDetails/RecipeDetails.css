@@ -1,11 +1,4 @@
-.background {
-    background: url('../diet-icons/DETAILSWALLPAPER.jpg');
-}
 
-.LIST-OF-INGREDIENTS {
-    background: #ffffff0a;
-    backdrop-filter: blur(4px);
-}
 
 .DIETS-DISH {
     display: flex;
@@ -102,8 +95,6 @@
 .STEPS-WRITED {
     text-transform: none;
     text-shadow: 2px 2px 8px #ffffffbd;
-    background: #ffffff0a;
-    backdrop-filter: blur(4px);
     border-radius: 3px;
     overflow-wrap: anywhere;
 }

@@ -37,16 +37,16 @@ export default function Home() {
     
     const [render, setRender] = useState('')
     
-    
 
-    var dietsToFilter = []
+    const recipeCheckboxes = document.querySelectorAll('input[type="checkbox"]')
+
     function handleCheck(e) {
-        if(e.target.checked){
-            dietsToFilter.push(e.target.value)
-        } 
-        if(!e.target.checked) {
-            dietsToFilter = dietsToFilter.filter(diet => diet !== e.targe.value)
-        }
+        let dietsToFilter = []
+        recipeCheckboxes.forEach(checkbox => {
+            if(checkbox.checked) {
+                dietsToFilter.push(checkbox.value.toLowerCase())
+            }
+        })
         filterbydiet(dietsToFilter)
     }
 
@@ -93,6 +93,11 @@ export default function Home() {
         }
     }
     
+
+    function onSearch(name) {
+        dispatch(fetchRecipes(name))
+        setCurrentPage(1)
+    }
     //dispatchtoprops
     useEffect(() => {
         dispatch(fetchDiets());
@@ -103,7 +108,7 @@ return <div className='WHOLE-PAG'>
                 <div className='conteiner-general'>
 
                     <div className='CONTEINER-NAV'>
-                        <NavBar></NavBar>
+                        <NavBar validate={true} onSearch={onSearch}></NavBar>
                     </div>
                     <div className='FILTERS_AND_RECIPES'>
                         <div className='FILTERS'>

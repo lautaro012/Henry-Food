@@ -30,7 +30,6 @@ describe('Recipe routes', () => {
       agent.get('/api/Recipe?name=Test')
       .expect(200)
       .expect(res => {
-        console.log(res.body)
         expect(res.body[0]?.name).equal('Test recipe')
       })
     );

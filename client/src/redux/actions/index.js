@@ -46,11 +46,13 @@ export function fetchRecipes(name) {
                 })
             })
             .catch(error => {
+                
                 console.log(error)
             })
             
         }
     }
+    
 }
 
 

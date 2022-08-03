@@ -66,20 +66,16 @@ export default function reducer(state = initialState, action) {
             // FILTRO POR DIETAS CON LOS VALUE
             const allrecipes = state.Allrecipes
             const specificDiet = action.payload
-            let recipesToFilter= state.recipes
                 const statusFiltered = 
                 specificDiet.length === 0 ? 
                 allrecipes     
                 : 
-                recipesToFilter.filter(recipe => {
-                    for (let i = 0; i < specificDiet.length; i++) {      
-                        if(recipe.diets.includes(specificDiet[i].toLowerCase()) || recipe.diets.includes(specificDiet[i])) {
-                            return recipe
-                        }
-                    }
+                allrecipes.filter(recipe => {
+                    let exist = specificDiet?.every(diet =>recipe.diets?.includes(diet));
+                     if (exist) return recipe
                     return console.log('Receta filtrada con exito')
                 }) 
-    
+                console.log('recetas filtradas', statusFiltered)
                 return {
                     ...state,
                     recipes: statusFiltered

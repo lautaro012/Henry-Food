@@ -35,7 +35,7 @@ export default function Recipe({ recipe, favrecipes}) {
         <div className= "card" key={id} > 
              <Link to= {`/Recipe/${id}`} className='Link' >
                 <div className='IMG-CARD'>
-                <img src= {image} alt='imagen' className='image'/>
+                <img src= {image} alt='imagen-not-found' className='image'/>
                 </div> 
                 <div className='CONTEINER-AL-LADO-DE-LA-IMAGEN'>
                     <div className='NOMBRE-Y-DETALLES'>

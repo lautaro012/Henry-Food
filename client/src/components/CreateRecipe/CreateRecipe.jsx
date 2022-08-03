@@ -148,7 +148,7 @@ export default function CreateRecipe() {
     return (
         <div className="FORM">    
           
-             <NavBar></NavBar>
+             <NavBar validate={false} ></NavBar>
      
             <div className='form-general'>
                 <RecipeName width={200} height={200} className='ICON-RECIPE'/>
@@ -284,9 +284,9 @@ export default function CreateRecipe() {
                     </div>   
                     <br></br> 
                 
-                    { !Object.keys(errors).length ? 
-                        <button type='submit'   className='SUBMIT-RECIPE'> CREAR RECETA </button> : 
-                        <button type='submit'   className='SUBMIT-RECIPE-ERROR' disabled > CREAR RECETA </button> 
+                    { Object.keys(errors).length ? 
+                        <button type='submit'   className='SUBMIT-RECIPE-ERROR' disabled > CREAR RECETA </button> :
+                        <button type='submit'   className='SUBMIT-RECIPE'> CREAR RECETA </button> 
                     }
                     
                 </form>

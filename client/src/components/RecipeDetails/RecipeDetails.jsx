@@ -50,7 +50,7 @@ export default function RecipeDetails(props) {
 
         <div className="background">
                 <div className='CONTEINER-NAV'>
-                    <NavBar></NavBar>
+                    <NavBar validate={false} ></NavBar>
                 </div>
 
             { !recipeDetails.image ?
