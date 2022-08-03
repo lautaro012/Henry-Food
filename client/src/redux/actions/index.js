@@ -12,6 +12,9 @@ export const FILTER_BY_DISH = 'FILTER_BY_DISH'
 export const CLEAR = 'CLEAR'
 export const ADD_TO_FAVORITES = 'ADD_TO_FAVORITES';
 export const REMOVE_FROM_FAVORTES = 'REMOVE_FROM_FAVORITES'
+
+
+
 require('dotenv').config();
 const {
   REACT_APP_API
@@ -23,7 +26,7 @@ export function fetchRecipes(name) {
         return function(dispatch) {
             // fetch('http://localhost:3001/api/Recipe?name=' + name)
 
-            fetch(`${REACT_APP_API}/api/Recipe?name=` + name )
+            fetch(`${REACT_APP_API}/api/Recipe?name=`+name )
             .then(resp => resp.json())
             .then(recipes => {
                 dispatch({
