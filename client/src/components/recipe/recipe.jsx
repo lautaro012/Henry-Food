@@ -6,7 +6,8 @@ import { useDispatch } from 'react-redux';
 import { addToFavorites, removeFromFavorites } from '../../redux/actions';
 
 export default function Recipe({ recipe, favrecipes}) {
-    let { name , image, id, health_score, diets, resume } = recipe
+    let { name , image, id, health_score, diets, resume, readyInMinutes } = recipe
+    console.log(recipe)
     
     let dispatch = useDispatch()
     const components = {
@@ -51,6 +52,9 @@ export default function Recipe({ recipe, favrecipes}) {
                                     <p>
                                         {name} 
                                     </p>
+                                    <div>
+                                          {readyInMinutes}
+                                    </div>
                                 </div>
                                 <div className='DIETS-ICONS'>
                                     {dietIcons?.map(Icon => {
@@ -63,6 +67,7 @@ export default function Recipe({ recipe, favrecipes}) {
                         <p>
                         {resume?.replace(/<[^>]+>/g, '')}
                         </p>
+
                     </div>
                 </div>
                  </Link>

@@ -35,6 +35,9 @@ module.exports = (sequelize) => {
     },
     veryPopular: {
       type: DataTypes.STRING
+    },
+    readyInMinutes: {
+      type: DataTypes.INTEGER
     }
   }, {
     timestamps: false,

@@ -108,6 +108,7 @@ router.get('/', async (req , res, next) => {
                     veryPopular: recipe.veryPopular,
                     dishTypes: recipe.dishTypes,  
                     diets: recipe.diets,
+                    readyInMinutes: recipe.readyInMinutes
                     }
                 })
 
