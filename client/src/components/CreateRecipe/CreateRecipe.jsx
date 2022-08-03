@@ -58,7 +58,9 @@ export default function CreateRecipe() {
     })
 
     useEffect(() => {
-        dispatch(fetchDiets());
+        if(dietsfetched.length === 0){
+            dispatch(fetchDiets());
+        }
         // dispatch(fetchRecipes());
     }, [dispatch])
     
@@ -236,13 +238,13 @@ export default function CreateRecipe() {
                     </div>
                     <div className="FORM-IMG-HS">
                         <div className="FORM-IMG">
-                            <span>Image  :   </span>
+                            <span>Image URL :   </span>
                             <input
                             type='text'
                             value={input.image}
                             name='image'
                             onChange={(e) => handleChange(e)}
-                            placeholder='put image..'
+                            placeholder='Copy the image here...'
                             />
                         </div>    
                         <div className={ (errors.HealthscoreNotNum || errors.HealthscoreMaxMin || errors.HealthscoreNull) && 'danger' && 'DANGER'}>

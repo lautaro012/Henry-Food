@@ -100,8 +100,10 @@ export default function Home() {
     }
     //dispatchtoprops
     useEffect(() => {
-        dispatch(fetchDiets());
-        dispatch(fetchRecipes());   
+        if(Allrecipes.length === 0) {
+            dispatch(fetchDiets());
+            dispatch(fetchRecipes());   
+        }
     }, [dispatch])          
 
 return <div className='WHOLE-PAG'>
