@@ -9,7 +9,6 @@ export default function Recipe({ recipe, favrecipes}) {
     let { name , image, id, health_score, diets, resume } = recipe
     
     let dispatch = useDispatch()
-
     const components = {
         glutenfree: icons.Glutenfree,
         dairyfree: icons.Dairyfree,

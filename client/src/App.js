@@ -4,20 +4,24 @@ import Home from './components/Home/Home';
 import Landing from './components/Landing/Landing'
 import RecipeDetails from './components/RecipeDetails/RecipeDetails'
 import CreateRecipe from './components/CreateRecipe/CreateRecipe'
+import { BrowserRouter } from 'react-router-dom';
+
 
 function App() {
   return (<div className='App'>
-    <Switch>
+    <BrowserRouter>
+      <Switch>
 
-      <Route exact path= '/' component={Landing}></Route>
+        <Route exact path= '/' component={Landing}></Route>
 
-      <Route path='/home' component={Home}></Route>
+        <Route path='/home' component={Home}></Route>
 
-      <Route path= '/CreateRecipe' component={CreateRecipe}></Route>
+        <Route path= '/CreateRecipe' component={CreateRecipe}></Route>
 
-      <Route path='/Recipe/:id' component={RecipeDetails} ></Route>
+        <Route path='/Recipe/:id' component={RecipeDetails} ></Route>
 
-    </Switch>
+      </Switch>
+    </BrowserRouter>
 
   </div>
 

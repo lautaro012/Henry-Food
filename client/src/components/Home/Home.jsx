@@ -24,6 +24,7 @@ export default function Home() {
     //Paginado
     const [currentPage, setCurrentPage] = useState(1)
     const [recipesPerPage, setRecipesPerPage] = useState(9)
+    
     const [onlyfavs, setOnlyFavs] = useState(false)
     const [onlyMy, setOnlyMy] = useState(false)
     //recetas filtradas por pagina
@@ -37,7 +38,7 @@ export default function Home() {
     const [render, setRender] = useState('')
     
     
-    
+
     var dietsToFilter = []
     function handleCheck(e) {
         if(e.target.checked){
@@ -50,9 +51,8 @@ export default function Home() {
     }
 
     function filterbydiet(diets) {
-        dispatch(filteredRecipeByDiet(diets, onlyMy, onlyfavs));
+        dispatch(filteredRecipeByDiet(diets));
         setCurrentPage(1);
-        setRender(`${render} renderizado`);
     }
 
     function handleSort(e) {
@@ -137,7 +137,6 @@ return <div className='WHOLE-PAG'>
                                                         type='checkbox'
                                                         name='diets'
                                                         value={diets.name}
-                                                        disabled={dietsToFilter > 2 ? true : false}
                                                         onClick={e => handleCheck(e)}
                                                         ></input>{diets.name}</label>
                                                     )
