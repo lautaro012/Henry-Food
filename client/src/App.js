@@ -4,6 +4,11 @@ import Home from './components/Home/Home';
 import Landing from './components/Landing/Landing'
 import RecipeDetails from './components/RecipeDetails/RecipeDetails'
 import CreateRecipe from './components/CreateRecipe/CreateRecipe'
+import dotenv from "dotenv";
+import axios from 'axios'
+dotenv.config();
+
+axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 
 
 function App() {
