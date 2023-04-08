@@ -41,7 +41,8 @@ export function fetchRecipes(name) {
             // fetch('http://localhost:3001/api/Recipe')
             fetch(`${REACT_APP_API}/api/Recipe`)
             //.then(resp => resp.json())
-            .then((recipes) => {        
+            .then((recipes) => {
+                console.log(REACT_APP_API, 'react app api')        
                 console.log(recipes, 'recetas')     
                 dispatch({
                     type: FETCH_RECIPE,
