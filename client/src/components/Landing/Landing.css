@@ -11,11 +11,6 @@
     justify-content: center;
 }
 
-
-
-@font-face {font-family: "Culinary"; src: url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.eot"); src: url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.eot?#iefix") format("embedded-opentype"), url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.woff2") format("woff2"), url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.woff") format("woff"), url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.ttf") format("truetype"), url("//db.onlinewebfonts.com/t/474c729bb9f706dac41385247d5dbc7c.svg#Culinary") format("svg"); }
-
-
 .START {
     width: 450px;
     font-size: 100px;
@@ -23,7 +18,6 @@
     background: #ffffff6e;
     border-radius: 40px;
     backdrop-filter: blur(1px);
-    font-family: 'Culinary';
     transition-duration: 0.4s;
 }
 
