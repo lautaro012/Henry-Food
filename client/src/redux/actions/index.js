@@ -39,7 +39,7 @@ export function fetchRecipes(name) {
     } else {
         return function(dispatch) {
             // fetch('http://localhost:3001/api/Recipe')
-            fetch(`${REACT_APP_API}/api/Recipe`)
+            fetch(`henry-food-production.up.railway.app/api/Recipe`)
             //.then(resp => resp.json())
             .then((recipes) => {
                 console.log(REACT_APP_API, 'react app api')        
