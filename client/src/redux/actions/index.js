@@ -40,7 +40,7 @@ export function fetchRecipes(name) {
         return function(dispatch) {
             // fetch('http://localhost:3001/api/Recipe')
             fetch(`henry-food-production.up.railway.app/api/Recipe`)
-            //.then(resp => resp.json())
+            .then(resp => resp.json())
             .then((recipes) => {
                 console.log(REACT_APP_API, 'react app api')        
                 console.log(recipes, 'recetas')     
