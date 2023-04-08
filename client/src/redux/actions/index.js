@@ -44,7 +44,7 @@ export function fetchRecipes(name) {
             .then((recipes) => {             
                 dispatch({
                     type: FETCH_RECIPE,
-                    payload: recipes
+                    payload: recipes[0]
                 })
             })
             .catch(error => {
