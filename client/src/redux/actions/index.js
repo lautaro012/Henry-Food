@@ -40,9 +40,8 @@ export function fetchRecipes(name) {
         return function(dispatch) {
             // fetch('http://localhost:3001/api/Recipe')
             fetch(`${REACT_APP_API}/api/Recipe`)
-            .then(resp => resp.json())
-            .then((recipes) => {
-                
+            //.then(resp => resp.json())
+            .then((recipes) => {             
                 dispatch({
                     type: FETCH_RECIPE,
                     payload: recipes
