@@ -20,7 +20,7 @@ export default function Home() {
     let favrecipes = useSelector(state => state.favorites)
     let Myrecipes = useSelector(state => state.Myrecipes)
     
-    
+    console.log(recipes, 'recetas home')
     //Paginado
     const [currentPage, setCurrentPage] = useState(1)
     const [recipesPerPage, setRecipesPerPage] = useState(9)
@@ -30,7 +30,7 @@ export default function Home() {
     //recetas filtradas por pagina
     const indexOfLastRecipe = currentPage * recipesPerPage
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage
-    const currentRecipes = recipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
+    const currentRecipes = recipes?.slice(indexOfFirstRecipe, indexOfLastRecipe)
     const paginado = (pageNumber) => {
         setCurrentPage(pageNumber)
     }

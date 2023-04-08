@@ -26,7 +26,7 @@ export function fetchRecipes(name) {
         return function(dispatch) {
             // fetch('http://localhost:3001/api/Recipe?name=' + name)
 
-            fetch(`${REACT_APP_API}/api/Recipe?name=`+name )
+            fetch(`https://henry-food-production.up.railway.app/api/Recipe?name=`+name )
             .then(resp => resp.json())
             .then(recipes => {
                 dispatch({
@@ -39,14 +39,14 @@ export function fetchRecipes(name) {
     } else {
         return function(dispatch) {
             // fetch('http://localhost:3001/api/Recipe')
-            fetch(`henry-food-production.up.railway.app/api/Recipe`)
+            fetch(`https://henry-food-production.up.railway.app/api/Recipe`)
             .then(resp => resp.json())
             .then((recipes) => {
                 console.log(REACT_APP_API, 'react app api')        
                 console.log(recipes, 'recetas')     
                 dispatch({
                     type: FETCH_RECIPE,
-                    payload: recipes[0]
+                    payload: recipes
                 })
             })
             .catch(error => {
@@ -68,7 +68,7 @@ export function fetchRecipeDetail(id) {
             if(typeof id === 'string') {
                 // fetch(`http://localhost:3001/api/Recipe/${id}`)
 
-                fetch(`${REACT_APP_API}/api/Recipe/${id}`)
+                fetch(`https://henry-food-production.up.railway.app/api/Recipe/${id}`)
                 .then(res => res.json())
                 .then(recipe => {
                     
@@ -92,7 +92,7 @@ export function fetchDiets() {
         try {
             
             // fetch('http://localhost:3001/api/Diet')
-            fetch(`${REACT_APP_API}/api/Diet`)
+            fetch(`https://henry-food-production.up.railway.app/api/Diet`)
                 .then(res => res.json())
                 .then(diets => {
                     dispatch({
@@ -112,7 +112,7 @@ export const createRecipe = function(payload, history) {
     return function(dispatch) {
         try {
             // fetch('http://localhost:3001/api/Recipe', {
-            fetch(`${REACT_APP_API}/api/Recipe`, {
+            fetch(`https://henry-food-production.up.railway.app/api/Recipe`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json, text/plain, */*',
@@ -126,7 +126,7 @@ export const createRecipe = function(payload, history) {
                
                 let promises = payload.diets.map(diet => {
                     // return fetch(`http://localhost:3001/api/Recipe/${recipe.id}/diet/${diet}`, {
-                    return fetch(`${REACT_APP_API}/api/Recipe/${recipe.id}/diet/${diet}` , {    
+                    return fetch(`https://henry-food-production.up.railway.app/api/Recipe/${recipe.id}/diet/${diet}` , {    
                         method: 'POST'
                     })
                 })
